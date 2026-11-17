@@ -79,6 +79,7 @@ class TournamentEventGroup extends Component
             'activeSeason' => $activeSeason,
             'displayTeams' => $displayTeams,
             'upcomingMatches' => $upcomingMatches,
+            'eventView' => $this->eventView,
         ]);
     }
 }

@@ -20,5 +20,7 @@ class DatabaseSeeder extends Seeder
             ['username' => 'admin'],
             ['passwordHash' => Hash::make('admin123')]
         );
+
+        $this->call(TournamentDataSeeder::class);
     }
 }

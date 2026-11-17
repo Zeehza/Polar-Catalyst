@@ -68,6 +68,7 @@ class TournamentResultGroup extends Component
             'activeSeason' => $activeSeason,
             'leaderboard' => $leaderboard,
             'groupLeaderboards' => $groupLeaderboards,
+            'playoffView' => $this->playoffView,
         ]);
     }
 }
