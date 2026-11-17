@@ -1,3 +1,4 @@
+<div>
 @if ($activeSeason)
 <div class="flex flex-col bg-white dark:bg-neutral-900 rounded-3xl border border-neutral-200/80 dark:border-neutral-800 shadow-sm overflow-hidden transition-all">
     <!-- Tournament Header -->
@@ -68,7 +69,7 @@
     </div>
 
     <!-- Season Body Content -->
-    <div class="p-6 md:p-8 flex flex-col gap-8">
+    <div x-data="{ eventTab: 'schedule' }" class="p-6 md:p-8 flex flex-col gap-8">
         <!-- Teams Showcase (Modern Esports Tokens) -->
         @if (count($displayTeams) > 0)
             <div class="flex flex-col gap-4 pb-6 border-b border-neutral-200/80 dark:border-neutral-800">
@@ -121,16 +122,18 @@
                 <div class="inline-flex p-1 bg-neutral-100 dark:bg-neutral-800 rounded-2xl border border-neutral-200/60 dark:border-neutral-700/60 gap-1">
                     <button
                         type="button"
-                        wire:click="setEventView('schedule')"
-                        class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer {{ $eventView === 'schedule' ? 'bg-white dark:bg-neutral-900 text-brand-600 dark:text-brand-400 shadow-xs' : 'text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-white' }}"
+                        x-on:click="eventTab = 'schedule'"
+                        class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer"
+                        :class="eventTab === 'schedule' ? 'bg-white dark:bg-neutral-900 text-brand-600 dark:text-brand-400 shadow-xs ring-1 ring-neutral-200/80 dark:ring-neutral-700' : 'text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-white'"
                     >
                         <x-lucide-clock class="h-3.5 w-3.5" />
                         <span>Jadwal Match</span>
                     </button>
                     <button
                         type="button"
-                        wire:click="setEventView('bracket')"
-                        class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer {{ $eventView === 'bracket' ? 'bg-white dark:bg-neutral-900 text-brand-600 dark:text-brand-400 shadow-xs' : 'text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-white' }}"
+                        x-on:click="eventTab = 'bracket'"
+                        class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer"
+                        :class="eventTab === 'bracket' ? 'bg-white dark:bg-neutral-900 text-brand-600 dark:text-brand-400 shadow-xs ring-1 ring-neutral-200/80 dark:ring-neutral-700' : 'text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-white'"
                     >
                         <x-lucide-git-commit class="h-3.5 w-3.5" />
                         <span>Bagan Bracket</span>
@@ -139,15 +142,18 @@
             </div>
         @endif
 
-        <!-- Content: Bracket View or Schedule Cards -->
-        @if ($activeSeason->type === 'PLAYOFF' && $eventView === 'bracket')
-            <div class="w-full">
+        <!-- Content: Bracket View -->
+        @if ($activeSeason->type === 'PLAYOFF' && $activeSeason->matches->count() > 0)
+            <div x-show="eventTab === 'bracket'" x-cloak class="w-full">
                 <x-tournament-bracket
                     :matches="$activeSeason->matches"
                     :tournamentName="$tournamentName . ' - ' . $activeSeason->season"
                 />
             </div>
-        @else
+        @endif
+
+        <!-- Content: Schedule Cards / Concluded Banner -->
+        <div x-show="eventTab === 'schedule'" class="w-full">
             @if ($upcomingMatches->isEmpty())
                 @if ($activeSeason->status === 'COMPLETED')
                     <!-- Concluded Tournament Banner -->
@@ -267,7 +273,8 @@
                     </div>
                 </div>
             @endif
-        @endif
+        </div>
     </div>
 </div>
 @endif
+</div>

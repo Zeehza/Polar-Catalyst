@@ -1,3 +1,4 @@
+<div>
 @if ($activeSeason)
 <div class="flex flex-col bg-white dark:bg-neutral-900 rounded-3xl border border-neutral-200/80 dark:border-neutral-800 shadow-sm p-6 md:p-8 transition-all gap-8">
     <!-- Tournament Header with Season Switcher -->
@@ -159,3 +160,4 @@
     @endif
 </div>
 @endif
+</div>

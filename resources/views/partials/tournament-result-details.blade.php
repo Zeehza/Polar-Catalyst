@@ -1,37 +1,43 @@
-<div class="flex flex-col gap-6 w-full">
+<div x-data="{ playoffTab: 'details' }" class="flex flex-col gap-6 w-full">
     <!-- View Switcher Tab for PLAYOFF tournaments -->
     @if ($activeSeason->type === 'PLAYOFF')
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-2 border-b border-neutral-200/80 dark:border-neutral-800">
             <div class="inline-flex p-1 bg-neutral-100 dark:bg-neutral-800 rounded-2xl border border-neutral-200/60 dark:border-neutral-700/60 gap-1">
                 <button
                     type="button"
-                    wire:click="setPlayoffView('bracket')"
-                    class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer {{ $playoffView === 'bracket' ? 'bg-white dark:bg-neutral-900 text-brand-600 dark:text-brand-400 shadow-xs' : 'text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-white' }}"
-                >
-                    <x-lucide-git-commit class="h-3.5 w-3.5" />
-                    <span>Bagan Bracket</span>
-                </button>
-                <button
-                    type="button"
-                    wire:click="setPlayoffView('details')"
-                    class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer {{ $playoffView === 'details' ? 'bg-white dark:bg-neutral-900 text-brand-600 dark:text-brand-400 shadow-xs' : 'text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-white' }}"
+                    x-on:click="playoffTab = 'details'"
+                    class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer"
+                    :class="playoffTab === 'details' ? 'bg-white dark:bg-neutral-900 text-brand-600 dark:text-brand-400 shadow-xs ring-1 ring-neutral-200/80 dark:ring-neutral-700' : 'text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-white'"
                 >
                     <x-lucide-list-ordered class="h-3.5 w-3.5" />
                     <span>Klasemen &amp; Match</span>
+                </button>
+                <button
+                    type="button"
+                    x-on:click="playoffTab = 'bracket'"
+                    class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer"
+                    :class="playoffTab === 'bracket' ? 'bg-white dark:bg-neutral-900 text-brand-600 dark:text-brand-400 shadow-xs ring-1 ring-neutral-200/80 dark:ring-neutral-700' : 'text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-white'"
+                >
+                    <x-lucide-git-commit class="h-3.5 w-3.5" />
+                    <span>Bagan Bracket</span>
                 </button>
             </div>
         </div>
     @endif
 
-    @if ($activeSeason->type === 'PLAYOFF' && $playoffView === 'bracket')
-        <div class="w-full">
+    <!-- Playoff Bracket View -->
+    @if ($activeSeason->type === 'PLAYOFF')
+        <div x-show="playoffTab === 'bracket'" x-cloak class="w-full">
             <x-tournament-bracket
                 :matches="$activeSeason->matches"
                 :tournamentName="$tournamentName . ' - ' . $activeSeason->season"
                 :championName="$leaderboard[0]['name'] ?? null"
             />
         </div>
-    @else
+    @endif
+
+    <!-- Standings & Match History View -->
+    <div x-show="playoffTab === 'details' || '{{ $activeSeason->type }}' !== 'PLAYOFF'" class="w-full">
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 w-full">
             <!-- LEADERBOARD / KLASEMEN (Left) -->
             <div class="lg:col-span-7 flex flex-col gap-5">
@@ -276,5 +282,5 @@
                 </div>
             </div>
         </div>
-    @endif
+    </div>
 </div>
