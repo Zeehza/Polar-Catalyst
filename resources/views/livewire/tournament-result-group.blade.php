@@ -352,7 +352,7 @@
             <div x-data="{ isOpen: false }" class="flex flex-col items-center w-full mt-6">
                 <button
                     type="button"
-                    @click="isOpen = !isOpen"
+                    x-on:click="isOpen = !isOpen"
                     class="flex items-center gap-2 px-5 py-2.5 text-sm font-semibold rounded-full border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900 text-neutral-700 dark:text-neutral-300 hover:bg-neutral-50 dark:hover:bg-neutral-800 hover:border-brand-300 dark:hover:border-brand-700 transition-all shadow-sm cursor-pointer"
                 >
                     <x-lucide-list-ordered class="h-4 w-4 text-brand-500" />

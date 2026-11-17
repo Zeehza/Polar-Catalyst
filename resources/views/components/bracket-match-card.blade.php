@@ -48,8 +48,8 @@
     <!-- Team A Row -->
     <div
         @if ($teamAId)
-            @mouseenter="hoveredTeamId = '{{ $teamAId }}'"
-            @mouseleave="hoveredTeamId = null"
+            x-on:mouseenter="hoveredTeamId = '{{ $teamAId }}'"
+            x-on:mouseleave="hoveredTeamId = null"
         @endif
         class="flex items-center justify-between px-3 py-2 transition-colors cursor-pointer border-b border-neutral-100 dark:border-neutral-800/60 {{ $isWinnerA ? 'bg-emerald-50/40 dark:bg-emerald-950/15' : 'hover:bg-neutral-50 dark:hover:bg-neutral-800/40' }}"
         :class="hoveredTeamId === '{{ $teamAId }}' ? 'bg-brand-500/15 text-brand-700 dark:text-brand-300 font-bold' : ''"
@@ -75,8 +75,8 @@
     <!-- Team B Row -->
     <div
         @if ($teamBId)
-            @mouseenter="hoveredTeamId = '{{ $teamBId }}'"
-            @mouseleave="hoveredTeamId = null"
+            x-on:mouseenter="hoveredTeamId = '{{ $teamBId }}'"
+            x-on:mouseleave="hoveredTeamId = null"
         @endif
         class="flex items-center justify-between px-3 py-2 transition-colors cursor-pointer {{ $isWinnerB ? 'bg-emerald-50/40 dark:bg-emerald-950/15' : 'hover:bg-neutral-50 dark:hover:bg-neutral-800/40' }}"
         :class="hoveredTeamId === '{{ $teamBId }}' ? 'bg-brand-500/15 text-brand-700 dark:text-brand-300 font-bold' : ''"

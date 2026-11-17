@@ -23,7 +23,7 @@
             <p class="max-w-150 text-lg text-neutral-600 dark:text-neutral-400 md:text-xl">
                 From Community To Community For Community
                 <br />
-                <i>&quot;We Don&apos;t Follow The Crowd, We Move It.&quot;</i>
+                <i>"We Don't Follow The Crowd, We Move It."</i>
             </p>
         </div>
     </section>

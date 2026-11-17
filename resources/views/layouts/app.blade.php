@@ -12,7 +12,7 @@
     <!-- Inter Font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
 
     <!-- Dark Mode Init Script (No FOUC) -->
     <script>
@@ -27,7 +27,6 @@
     @livewireStyles
 </head>
 <body class="min-h-screen antialiased bg-white text-neutral-900 dark:bg-neutral-950 dark:text-neutral-50 flex flex-col font-sans">
-    {{ $slot ?? '' }}
     @yield('content')
 
     @livewireScripts
