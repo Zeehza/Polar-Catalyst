@@ -22,7 +22,7 @@
     </section>
 
     <!-- Content Section -->
-    <section class="container mx-auto px-4 py-10 md:py-14 md:px-8 max-w-6xl">
+    <section class="container mx-auto px-4 py-10 md:py-14 md:px-6 lg:px-8 max-w-7xl">
         @if (empty($tournamentGroups) || count($tournamentGroups) === 0)
             <div class="text-center py-20 px-6 bg-white dark:bg-neutral-900 rounded-3xl border border-neutral-200/80 dark:border-neutral-800 shadow-sm max-w-md mx-auto">
                 <div class="w-14 h-14 mx-auto mb-4 rounded-2xl bg-neutral-100 dark:bg-neutral-800 flex items-center justify-center text-neutral-400">
