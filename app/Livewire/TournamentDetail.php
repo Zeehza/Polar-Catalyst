@@ -6,9 +6,12 @@ use App\Models\Team;
 use App\Models\Tournament;
 use App\Models\TournamentMatch;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 
 class TournamentDetail extends Component
 {
+    use WithFileUploads;
+
     public string $tournamentId;
 
     // Info form
@@ -21,6 +24,13 @@ class TournamentDetail extends Component
     // Add team form
     public string $newTeamName = '';
     public string $newTeamLogoUrl = '';
+
+    // Edit team logo form
+    public ?string $editingTeamId = null;
+    public string $editingTeamName = '';
+    public string $editingTeamLogoUrl = '';
+    public $editingTeamLogoFile = null;
+    public ?string $teamToast = null;
 
     // Add match form
     public int $newMatchOrder = 1;
@@ -125,6 +135,77 @@ class TournamentDetail extends Component
         }
     }
 
+    public function openEditLogoModal(string $teamId)
+    {
+        $team = Team::where('tournamentId', $this->tournamentId)->find($teamId);
+        if (!$team) {
+            return;
+        }
+
+        $this->editingTeamId = $team->id;
+        $this->editingTeamName = $team->name;
+        $this->editingTeamLogoUrl = $team->logoUrl ?? '';
+        $this->editingTeamLogoFile = null;
+        $this->resetErrorBag();
+    }
+
+    public function closeEditLogoModal()
+    {
+        $this->editingTeamId = null;
+        $this->editingTeamName = '';
+        $this->editingTeamLogoUrl = '';
+        $this->editingTeamLogoFile = null;
+        $this->resetErrorBag();
+    }
+
+    public function saveTeamLogo()
+    {
+        if (!$this->editingTeamId) {
+            return;
+        }
+
+        $team = Team::where('tournamentId', $this->tournamentId)->findOrFail($this->editingTeamId);
+
+        if (!empty($this->editingTeamLogoUrl)) {
+            $url = trim($this->editingTeamLogoUrl);
+            if (!preg_match('~^(?:f|ht)tps?://~i', $url)) {
+                $url = 'https://' . $url;
+            }
+            $this->editingTeamLogoUrl = $url;
+        }
+
+        $this->validate([
+            'editingTeamLogoUrl' => 'nullable|url|max:500',
+            'editingTeamLogoFile' => 'nullable|image|max:2048',
+        ]);
+
+        $finalLogoUrl = trim($this->editingTeamLogoUrl) ?: null;
+
+        if ($this->editingTeamLogoFile) {
+            $path = $this->editingTeamLogoFile->store('team-logos', 'public');
+            $finalLogoUrl = asset('storage/' . $path);
+        }
+
+        $team->update([
+            'logoUrl' => $finalLogoUrl,
+        ]);
+
+        $this->teamToast = "Logo tim {$team->name} berhasil diperbarui!";
+        $this->closeEditLogoModal();
+        $this->dispatch('hide-toast', target: 'team');
+    }
+
+    public function removeTeamLogo(string $teamId)
+    {
+        $team = Team::where('tournamentId', $this->tournamentId)->find($teamId);
+        if ($team) {
+            $team->update(['logoUrl' => null]);
+            $this->teamToast = "Logo tim {$team->name} dihapus!";
+            $this->closeEditLogoModal();
+            $this->dispatch('hide-toast', target: 'team');
+        }
+    }
+
     public function deleteTeam(string $teamId)
     {
         $team = Team::where('tournamentId', $this->tournamentId)->find($teamId);
@@ -223,6 +304,7 @@ class TournamentDetail extends Component
         return view('livewire.tournament-detail', [
             'tournament' => $tournament,
             'siblingSeasons' => $siblingSeasons,
+            'tournamentId' => $this->tournamentId,
         ]);
     }
 }

@@ -1,6 +1,7 @@
 <div class="flex flex-col gap-8" x-data="{
     infoToastOpen: false,
     matchToastOpen: false,
+    teamToastOpen: false,
     init() {
         Livewire.on('hide-toast', (data) => {
             if (data.target === 'info') {
@@ -9,6 +10,9 @@
             } else if (data.target === 'match') {
                 this.matchToastOpen = true;
                 setTimeout(() => this.matchToastOpen = false, 2500);
+            } else if (data.target === 'team') {
+                this.teamToastOpen = true;
+                setTimeout(() => this.teamToastOpen = false, 2500);
             }
         });
     }
@@ -155,7 +159,17 @@
         </div>
 
         <!-- Manage Teams -->
-        <div class="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-2xl p-6 shadow-sm flex flex-col h-full">
+        <div class="relative bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-2xl p-6 shadow-sm flex flex-col h-full">
+            <!-- Toast notification for team -->
+            <div
+                x-show="teamToastOpen"
+                x-cloak
+                class="absolute -top-3 left-1/2 -translate-x-1/2 bg-green-600 text-white text-xs font-semibold px-4 py-1.5 rounded-lg shadow-lg flex items-center gap-1.5 z-50 transition-all"
+            >
+                <x-lucide-check class="h-4 w-4" />
+                <span>{{ $teamToast ?? 'Logo tim berhasil diperbarui!' }}</span>
+            </div>
+
             <div class="flex items-center justify-between mb-4">
                 <h2 class="text-lg font-bold dark:text-white flex items-center gap-2">
                     <x-lucide-users class="h-5 w-5 text-brand-500" /> Tim Peserta
@@ -198,15 +212,31 @@
                     <ul class="flex flex-col gap-1">
                         @foreach ($tournament->teams as $team)
                             <li class="px-3 py-2 text-sm bg-neutral-50 dark:bg-neutral-950 rounded-lg dark:text-neutral-300 font-medium flex items-center justify-between group">
-                                <div class="flex items-center gap-2 min-w-0 flex-1 pr-2">
+                                <div
+                                    class="flex items-center gap-2.5 min-w-0 flex-1 pr-2 cursor-pointer hover:opacity-80 transition-opacity"
+                                    wire:click="openEditLogoModal('{{ $team->id }}')"
+                                    title="Klik untuk upload/ubah logo tim"
+                                >
                                     @if ($team->logoUrl)
-                                        <img src="{{ $team->logoUrl }}" alt="{{ $team->name }}" class="w-6 h-6 object-contain shrink-0" />
+                                        <img src="{{ $team->logoUrl }}" alt="{{ $team->name }}" class="w-6 h-6 object-contain rounded bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 shrink-0" />
                                     @else
-                                        <div class="w-6 h-6 bg-neutral-200 dark:bg-neutral-800 rounded flex items-center justify-center text-[10px] shrink-0">?</div>
+                                        <div class="w-6 h-6 bg-neutral-200 dark:bg-neutral-800 rounded flex items-center justify-center text-[10px] font-black text-neutral-500 shrink-0">
+                                            {{ strtoupper(substr($team->name, 0, 2)) }}
+                                        </div>
                                     @endif
                                     <span class="truncate">{{ $team->name }}</span>
                                 </div>
-                                <div class="flex items-center gap-2 shrink-0">
+                                <div class="flex items-center gap-1.5 shrink-0">
+                                    <button
+                                        type="button"
+                                        wire:click="openEditLogoModal('{{ $team->id }}')"
+                                        class="text-xs px-2 py-1 rounded-md text-neutral-500 hover:text-brand-600 hover:bg-neutral-200/60 dark:hover:bg-neutral-800 transition-colors flex items-center gap-1 cursor-pointer"
+                                        title="Upload atau ubah link logo"
+                                    >
+                                        <x-lucide-image class="h-3.5 w-3.5" />
+                                        <span class="text-[11px] font-medium hidden sm:inline">{{ $team->logoUrl ? 'Ubah Logo' : 'Upload Logo' }}</span>
+                                    </button>
+
                                     @if ($tournament->type === 'GROUP_STAGE')
                                         <select
                                             wire:change="updateTeamGroup('{{ $team->id }}', $event.target.value)"
@@ -224,6 +254,7 @@
                                         wire:click="deleteTeam('{{ $team->id }}')"
                                         wire:confirm="Hapus tim {{ $team->name }}?"
                                         class="text-red-500 opacity-0 group-hover:opacity-100 transition-opacity p-1 hover:bg-red-50 dark:hover:bg-red-900/20 rounded cursor-pointer"
+                                        title="Hapus tim"
                                     >
                                         <x-lucide-trash-2 class="h-4 w-4" />
                                     </button>
@@ -438,4 +469,168 @@
             </div>
         </div>
     </div>
+
+    <!-- Edit Team Logo Modal -->
+    @if ($editingTeamId)
+        <div
+            class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs"
+            x-data
+            x-on:keydown.escape.window="$wire.closeEditLogoModal()"
+        >
+            <!-- Backdrop -->
+            <div class="fixed inset-0" wire:click="closeEditLogoModal"></div>
+
+            <!-- Modal Content -->
+            <div class="relative bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-3xl p-6 max-w-md w-full shadow-2xl z-10 flex flex-col gap-5">
+                <!-- Header -->
+                <div class="flex items-center justify-between pb-3 border-b border-neutral-200/80 dark:border-neutral-800">
+                    <div class="flex items-center gap-2.5">
+                        <div class="p-2 bg-brand-500/10 text-brand-600 dark:text-brand-400 rounded-xl">
+                            <x-lucide-image class="h-5 w-5" />
+                        </div>
+                        <div>
+                            <h3 class="text-base font-bold text-neutral-900 dark:text-white">
+                                Atur Logo Tim
+                            </h3>
+                            <p class="text-xs text-neutral-500 dark:text-neutral-400">
+                                Tim: <span class="font-bold text-neutral-800 dark:text-neutral-200">{{ $editingTeamName }}</span>
+                            </p>
+                        </div>
+                    </div>
+                    <button
+                        type="button"
+                        wire:click="closeEditLogoModal"
+                        class="p-1.5 text-neutral-400 hover:text-neutral-700 dark:hover:text-neutral-200 hover:bg-neutral-100 dark:hover:bg-neutral-800 rounded-lg transition-colors cursor-pointer"
+                    >
+                        <x-lucide-x class="h-5 w-5" />
+                    </button>
+                </div>
+
+                <!-- Preview Area -->
+                <div class="flex items-center gap-4 p-3 bg-neutral-50 dark:bg-neutral-950 border border-neutral-200/80 dark:border-neutral-800 rounded-2xl">
+                    <div class="relative w-14 h-14 rounded-xl border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900 flex items-center justify-center overflow-hidden shrink-0 shadow-2xs">
+                        @php
+                            $previewUrl = null;
+                            if ($editingTeamLogoFile && method_exists($editingTeamLogoFile, 'temporaryUrl')) {
+                                try {
+                                    $previewUrl = $editingTeamLogoFile->temporaryUrl();
+                                } catch (\Throwable $e) {
+                                    $previewUrl = null;
+                                }
+                            } elseif (!empty($editingTeamLogoUrl)) {
+                                $previewUrl = $editingTeamLogoUrl;
+                            }
+                        @endphp
+
+                        @if ($previewUrl)
+                            <img src="{{ $previewUrl }}" alt="Preview" class="w-full h-full object-contain p-1" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+                            <div style="display: none;" class="w-full h-full items-center justify-center text-xs text-neutral-400 font-bold">
+                                ?
+                            </div>
+                        @else
+                            <span class="text-sm font-black text-neutral-400">
+                                {{ strtoupper(substr($editingTeamName, 0, 2)) }}
+                            </span>
+                        @endif
+                    </div>
+                    <div class="flex flex-col text-xs">
+                        <span class="font-bold text-neutral-900 dark:text-white">Pratinjau Logo</span>
+                        <span class="text-neutral-500 dark:text-neutral-400">
+                            @if ($previewUrl)
+                                Logo siap disimpan.
+                            @else
+                                Belum ada logo yang ditentukan.
+                            @endif
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Form Fields -->
+                <form wire:submit.prevent="saveTeamLogo" class="flex flex-col gap-4">
+                    <!-- URL Input -->
+                    <div class="flex flex-col gap-1.5">
+                        <label class="text-xs font-bold text-neutral-700 dark:text-neutral-300 flex items-center gap-1.5">
+                            <x-lucide-link class="h-3.5 w-3.5 text-neutral-400" />
+                            <span>Link URL Logo</span>
+                        </label>
+                        <input
+                            type="text"
+                            wire:model.live.debounce.300ms="editingTeamLogoUrl"
+                            placeholder="https://contoh.com/logo-tim.png"
+                            class="w-full px-3.5 py-2 text-xs md:text-sm bg-neutral-50 dark:bg-neutral-950 border border-neutral-200 dark:border-neutral-800 rounded-xl outline-none focus:border-brand-500 dark:text-white transition-colors"
+                        />
+                        <p class="text-[11px] text-neutral-400">
+                            Tempel link gambar langsung dari Discord, Imgur, Cloudinary, dsb.
+                        </p>
+                        @error('editingTeamLogoUrl')
+                            <span class="text-xs text-red-500">{{ $message }}</span>
+                        @enderror
+                    </div>
+
+                    <!-- Divider -->
+                    <div class="relative flex items-center justify-center my-0.5">
+                        <div class="border-t border-neutral-200 dark:border-neutral-800 w-full"></div>
+                        <span class="bg-white dark:bg-neutral-900 px-3 text-[10px] font-bold text-neutral-400 uppercase tracking-wider absolute">
+                            atau upload file
+                        </span>
+                    </div>
+
+                    <!-- File Upload Input -->
+                    <div class="flex flex-col gap-1.5">
+                        <label class="text-xs font-bold text-neutral-700 dark:text-neutral-300 flex items-center gap-1.5">
+                            <x-lucide-upload class="h-3.5 w-3.5 text-neutral-400" />
+                            <span>Unggah File Gambar</span>
+                        </label>
+                        <input
+                            type="file"
+                            wire:model="editingTeamLogoFile"
+                            accept="image/png,image/jpeg,image/webp,image/svg+xml"
+                            class="w-full text-xs text-neutral-500 file:mr-3 file:py-1.5 file:px-3 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-brand-500/10 file:text-brand-600 dark:file:text-brand-400 hover:file:bg-brand-500/20 cursor-pointer"
+                        />
+                        <div wire:loading wire:target="editingTeamLogoFile" class="text-xs text-brand-600 dark:text-brand-400 font-medium flex items-center gap-1.5">
+                            <x-lucide-loader-2 class="h-3 w-3 animate-spin" />
+                            <span>Mengunggah file...</span>
+                        </div>
+                        @error('editingTeamLogoFile')
+                            <span class="text-xs text-red-500">{{ $message }}</span>
+                        @enderror
+                    </div>
+
+                    <!-- Modal Actions -->
+                    <div class="flex items-center justify-between pt-3 border-t border-neutral-200/80 dark:border-neutral-800 gap-2 mt-1">
+                        <div>
+                            @if (!empty($editingTeamLogoUrl) || $tournament->teams->find($editingTeamId)?->logoUrl)
+                                <button
+                                    type="button"
+                                    wire:click="removeTeamLogo('{{ $editingTeamId }}')"
+                                    wire:confirm="Hapus logo tim ini?"
+                                    class="text-xs text-red-500 hover:text-red-700 font-semibold px-2 py-1.5 rounded-lg hover:bg-red-50 dark:hover:bg-red-950/30 transition-colors cursor-pointer"
+                                >
+                                    Hapus Logo
+                                </button>
+                            @endif
+                        </div>
+
+                        <div class="flex items-center gap-2">
+                            <button
+                                type="button"
+                                wire:click="closeEditLogoModal"
+                                class="px-3.5 py-2 text-xs font-bold text-neutral-600 dark:text-neutral-400 hover:bg-neutral-100 dark:hover:bg-neutral-800 rounded-xl transition-colors cursor-pointer"
+                            >
+                                Batal
+                            </button>
+                            <button
+                                type="submit"
+                                wire:loading.attr="disabled"
+                                class="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-bold text-white bg-brand-600 hover:bg-brand-500 rounded-xl transition-colors shadow-xs cursor-pointer disabled:opacity-50"
+                            >
+                                <x-lucide-save class="h-3.5 w-3.5" />
+                                <span>Simpan Logo</span>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    @endif
 </div>
