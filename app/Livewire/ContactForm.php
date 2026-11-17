@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use App\Models\ContactSubmission;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\RateLimiter;
 use Livewire\Component;
 
@@ -98,7 +99,7 @@ class ContactForm extends Component
                         $submission->update(['discordSent' => true]);
                     }
                 } catch (\Throwable $e) {
-                    \Log::error('Discord webhook error: ' . $e->getMessage());
+                    Log::error('Discord webhook error: ' . $e->getMessage());
                 }
             }
 
@@ -126,14 +127,14 @@ class ContactForm extends Component
                         $submission->update(['emailSent' => true]);
                     }
                 } catch (\Throwable $e) {
-                    \Log::error('Resend email error: ' . $e->getMessage());
+                    Log::error('Resend email error: ' . $e->getMessage());
                 }
             }
 
             $this->reset(['name', 'company', 'email', 'message', 'website']);
             $this->successMessage = 'Pesan Anda berhasil dikirim! Tim kami akan segera menghubungi Anda.';
         } catch (\Throwable $e) {
-            \Log::error('Contact form error: ' . $e->getMessage());
+            Log::error('Contact form error: ' . $e->getMessage());
             $this->errorMessage = 'Terjadi kesalahan internal saat memproses pesan Anda. Silakan coba lagi nanti.';
         }
     }
