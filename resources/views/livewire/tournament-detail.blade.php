@@ -180,28 +180,45 @@
             </div>
 
             <!-- Add team form -->
-            <form wire:submit.prevent="addTeam" class="flex gap-2 mb-4">
-                <div class="flex flex-col gap-2 flex-1">
-                    <input
-                        type="text"
-                        wire:model="newTeamName"
-                        placeholder="Masukkan nama tim"
-                        required
-                        class="px-3 py-2 bg-neutral-50 dark:bg-neutral-950 border border-neutral-200 dark:border-neutral-800 rounded-lg outline-none text-sm dark:text-white"
-                    />
+            <form wire:submit.prevent="addTeam" class="flex flex-col gap-2 mb-4 p-3 bg-neutral-50/80 dark:bg-neutral-950/60 border border-neutral-200/80 dark:border-neutral-800 rounded-xl">
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                    <div class="sm:col-span-2">
+                        <input
+                            type="text"
+                            wire:model="newTeamName"
+                            placeholder="Nama tim (misal: Rex Regum Qeon)"
+                            required
+                            class="w-full px-3 py-2 bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-lg outline-none text-xs sm:text-sm dark:text-white"
+                        />
+                        @error('newTeamName') <span class="text-[11px] text-red-500">{{ $message }}</span> @enderror
+                    </div>
+                    <div>
+                        <input
+                            type="text"
+                            wire:model="newTeamShortName"
+                            placeholder="Singkatan (opsional)"
+                            maxlength="10"
+                            class="w-full px-3 py-2 bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-lg outline-none text-xs sm:text-sm dark:text-white font-mono uppercase font-semibold"
+                        />
+                        @error('newTeamShortName') <span class="text-[11px] text-red-500">{{ $message }}</span> @enderror
+                    </div>
+                </div>
+
+                <div class="flex gap-2">
                     <input
                         type="url"
                         wire:model="newTeamLogoUrl"
-                        placeholder="URL logo tim (opsional)"
-                        class="px-3 py-2 bg-neutral-50 dark:bg-neutral-950 border border-neutral-200 dark:border-neutral-800 rounded-lg outline-none text-sm dark:text-white"
+                        placeholder="URL link logo tim (opsional)"
+                        class="flex-1 px-3 py-2 bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-lg outline-none text-xs sm:text-sm dark:text-white"
                     />
+                    <button
+                        type="submit"
+                        class="bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 px-4 py-2 rounded-lg hover:opacity-80 transition-opacity flex items-center justify-center gap-1.5 text-xs font-bold shrink-0 cursor-pointer"
+                    >
+                        <x-lucide-plus class="h-4 w-4" />
+                        <span>Tambah Tim</span>
+                    </button>
                 </div>
-                <button
-                    type="submit"
-                    class="bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 px-3 py-2 rounded-lg hover:opacity-80 transition-opacity flex items-center justify-center self-end h-21.5 cursor-pointer"
-                >
-                    <x-lucide-plus class="h-4 w-4" />
-                </button>
             </form>
 
             <!-- Teams list -->
@@ -215,16 +232,21 @@
                                 <div
                                     class="flex items-center gap-2.5 min-w-0 flex-1 pr-2 cursor-pointer hover:opacity-80 transition-opacity"
                                     wire:click="openEditLogoModal('{{ $team->id }}')"
-                                    title="Klik untuk upload/ubah logo tim"
+                                    title="Klik untuk ubah logo & singkatan tim"
                                 >
                                     @if ($team->logoUrl)
                                         <img src="{{ $team->logoUrl }}" alt="{{ $team->name }}" loading="lazy" decoding="async" class="w-8 h-8 object-contain rounded-lg bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 shrink-0 p-0.5" />
                                     @else
                                         <div class="w-8 h-8 bg-neutral-200 dark:bg-neutral-800 rounded-lg flex items-center justify-center text-xs font-black text-neutral-500 shrink-0">
-                                            {{ strtoupper(substr($team->name, 0, 2)) }}
+                                            {{ $team->short_code }}
                                         </div>
                                     @endif
-                                    <span class="truncate">{{ $team->name }}</span>
+                                    <div class="flex items-center gap-1.5 min-w-0">
+                                        <span class="truncate font-semibold">{{ $team->name }}</span>
+                                        <span class="px-1.5 py-0.5 rounded text-[10px] font-black font-mono bg-neutral-200/80 dark:bg-neutral-800 text-neutral-600 dark:text-neutral-300 shrink-0">
+                                            {{ $team->short_code }}
+                                        </span>
+                                    </div>
                                 </div>
                                 <div class="flex items-center gap-1.5 shrink-0">
                                     <button
@@ -529,7 +551,7 @@
                             </div>
                         @else
                             <span class="text-sm font-black text-neutral-400">
-                                {{ strtoupper(substr($editingTeamName, 0, 2)) }}
+                                {{ !empty($editingTeamShortName) ? strtoupper($editingTeamShortName) : strtoupper(substr($editingTeamName, 0, 2)) }}
                             </span>
                         @endif
                     </div>
@@ -547,6 +569,30 @@
 
                 <!-- Form Fields -->
                 <form wire:submit.prevent="saveTeamLogo" class="flex flex-col gap-4">
+                    <!-- Short Name Input -->
+                    <div class="flex flex-col gap-1.5">
+                        <label class="text-xs font-bold text-neutral-700 dark:text-neutral-300 flex items-center justify-between">
+                            <span class="flex items-center gap-1.5">
+                                <x-lucide-tag class="h-3.5 w-3.5 text-neutral-400" />
+                                <span>Nama Singkatan Tim (Pita Atas Banner)</span>
+                            </span>
+                            <span class="text-[10px] text-neutral-400 font-normal">Kosong = singkat otomatis</span>
+                        </label>
+                        <input
+                            type="text"
+                            wire:model="editingTeamShortName"
+                            placeholder="Misal: RRQ, EVOS, BTR, DQ"
+                            maxlength="10"
+                            class="w-full px-3.5 py-2 text-xs md:text-sm bg-neutral-50 dark:bg-neutral-950 border border-neutral-200 dark:border-neutral-800 rounded-xl outline-none focus:border-brand-500 dark:text-white uppercase font-mono font-semibold transition-colors"
+                        />
+                        <p class="text-[11px] text-neutral-400">
+                            Nama singkatan ini muncul pada pita merah atas banner tim ala MPL. Jika dikosongkan, sistem otomatis membuat singkatan.
+                        </p>
+                        @error('editingTeamShortName')
+                            <span class="text-xs text-red-500">{{ $message }}</span>
+                        @enderror
+                    </div>
+
                     <!-- URL Input -->
                     <div class="flex flex-col gap-1.5">
                         <label class="text-xs font-bold text-neutral-700 dark:text-neutral-300 flex items-center gap-1.5">

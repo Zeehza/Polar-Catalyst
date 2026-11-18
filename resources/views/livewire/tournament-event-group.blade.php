@@ -88,15 +88,7 @@
                 <div class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-4 lg:grid-cols-8 gap-3 sm:gap-4 pt-1">
                     @foreach ($displayTeams as $team)
                         @php
-                            $rawName = trim($team->name);
-                            $words = preg_split('/\s+/', $rawName);
-                            if (count($words) >= 2) {
-                                $shortCode = strtoupper(substr($words[0], 0, 1) . substr($words[1], 0, 1));
-                            } elseif (strlen($rawName) <= 4) {
-                                $shortCode = strtoupper($rawName);
-                            } else {
-                                $shortCode = strtoupper(substr($rawName, 0, 3));
-                            }
+                            $shortCode = $team->short_code;
                         @endphp
                         <div class="group flex flex-col items-center cursor-pointer">
                             <!-- MPL Style Hanging Pennant Banner -->

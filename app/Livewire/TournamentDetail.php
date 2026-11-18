@@ -23,11 +23,13 @@ class TournamentDetail extends Component
 
     // Add team form
     public string $newTeamName = '';
+    public string $newTeamShortName = '';
     public string $newTeamLogoUrl = '';
 
     // Edit team logo form
     public ?string $editingTeamId = null;
     public string $editingTeamName = '';
+    public string $editingTeamShortName = '';
     public string $editingTeamLogoUrl = '';
     public $editingTeamLogoFile = null;
     public ?string $teamToast = null;
@@ -115,16 +117,18 @@ class TournamentDetail extends Component
     {
         $this->validate([
             'newTeamName' => 'required|string|max:100',
+            'newTeamShortName' => 'nullable|string|max:10',
             'newTeamLogoUrl' => 'nullable|url|max:500',
         ]);
 
         Team::create([
             'name' => trim($this->newTeamName),
+            'shortName' => trim($this->newTeamShortName) ? strtoupper(trim($this->newTeamShortName)) : null,
             'logoUrl' => trim($this->newTeamLogoUrl) ?: null,
             'tournamentId' => $this->tournamentId,
         ]);
 
-        $this->reset(['newTeamName', 'newTeamLogoUrl']);
+        $this->reset(['newTeamName', 'newTeamShortName', 'newTeamLogoUrl']);
     }
 
     public function updateTeamGroup(string $teamId, ?string $group)
@@ -144,6 +148,7 @@ class TournamentDetail extends Component
 
         $this->editingTeamId = $team->id;
         $this->editingTeamName = $team->name;
+        $this->editingTeamShortName = $team->shortName ?? '';
         $this->editingTeamLogoUrl = $team->logoUrl ?? '';
         $this->editingTeamLogoFile = null;
         $this->resetErrorBag();
@@ -153,6 +158,7 @@ class TournamentDetail extends Component
     {
         $this->editingTeamId = null;
         $this->editingTeamName = '';
+        $this->editingTeamShortName = '';
         $this->editingTeamLogoUrl = '';
         $this->editingTeamLogoFile = null;
         $this->resetErrorBag();
@@ -175,6 +181,7 @@ class TournamentDetail extends Component
         }
 
         $this->validate([
+            'editingTeamShortName' => 'nullable|string|max:10',
             'editingTeamLogoUrl' => 'nullable|url|max:500',
             'editingTeamLogoFile' => 'nullable|image|max:2048',
         ]);
@@ -187,10 +194,11 @@ class TournamentDetail extends Component
         }
 
         $team->update([
+            'shortName' => trim($this->editingTeamShortName) ? strtoupper(trim($this->editingTeamShortName)) : null,
             'logoUrl' => $finalLogoUrl,
         ]);
 
-        $this->teamToast = "Logo tim {$team->name} berhasil diperbarui!";
+        $this->teamToast = "Data tim {$team->name} berhasil diperbarui!";
         $this->closeEditLogoModal();
         $this->dispatch('hide-toast', target: 'team');
     }
