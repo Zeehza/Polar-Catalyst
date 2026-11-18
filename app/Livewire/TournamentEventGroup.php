@@ -19,16 +19,7 @@ class TournamentEventGroup extends Component
         $this->tournamentName = $tournamentName;
         $this->game = $game;
         $this->seasonIds = $seasonIds;
-
-        $seasons = Tournament::whereIn('id', $this->seasonIds)->get();
-        $sorted = $seasons->sort(function ($a, $b) {
-            $weights = ['ONGOING' => 3, 'UPCOMING' => 2, 'COMPLETED' => 1, 'DRAFT' => 0];
-            $diff = ($weights[$b->status] ?? 0) - ($weights[$a->status] ?? 0);
-            if ($diff !== 0) return $diff;
-            return $b->startDate <=> $a->startDate;
-        });
-
-        $this->activeSeasonId = $sorted->first()?->id ?? '';
+        $this->activeSeasonId = $this->seasonIds[0] ?? '';
     }
 
     public function selectSeason(string $seasonId)
@@ -54,6 +45,9 @@ class TournamentEventGroup extends Component
             });
 
         $activeSeason = $seasons->firstWhere('id', $this->activeSeasonId) ?? $seasons->first();
+        if ($activeSeason && $this->activeSeasonId !== $activeSeason->id) {
+            $this->activeSeasonId = $activeSeason->id;
+        }
 
         $displayTeams = [];
         if ($activeSeason) {

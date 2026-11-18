@@ -19,11 +19,7 @@ class TournamentResultGroup extends Component
         $this->tournamentName = $tournamentName;
         $this->game = $game;
         $this->seasonIds = $seasonIds;
-
-        $seasons = Tournament::whereIn('id', $this->seasonIds)->get();
-        $sorted = $seasons->sortByDesc('startDate');
-
-        $this->activeSeasonId = $sorted->first()?->id ?? '';
+        $this->activeSeasonId = $this->seasonIds[0] ?? '';
     }
 
     public function selectSeason(string $seasonId)
@@ -44,6 +40,9 @@ class TournamentResultGroup extends Component
             ->sortByDesc('startDate');
 
         $activeSeason = $seasons->firstWhere('id', $this->activeSeasonId) ?? $seasons->first();
+        if ($activeSeason && $this->activeSeasonId !== $activeSeason->id) {
+            $this->activeSeasonId = $activeSeason->id;
+        }
 
         $leaderboard = [];
         $groupLeaderboards = [];
