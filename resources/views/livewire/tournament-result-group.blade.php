@@ -61,7 +61,7 @@
                         </div>
                         <div class="w-14 h-14 sm:w-18 sm:h-18 rounded-2xl p-1 bg-white dark:bg-neutral-900 border-2 border-slate-400/50 shadow-sm flex items-center justify-center mb-2 group-hover:scale-105 transition-transform">
                             @if ($leaderboard[1]['logoUrl'])
-                                <img src="{{ $leaderboard[1]['logoUrl'] }}" alt="{{ $leaderboard[1]['name'] }}" class="w-full h-full object-contain" />
+                                <img src="{{ $leaderboard[1]['logoUrl'] }}" alt="{{ $leaderboard[1]['name'] }}" loading="lazy" decoding="async" class="w-full h-full object-contain" />
                             @else
                                 <span class="font-black text-sm text-slate-500 dark:text-slate-300">
                                     {{ strtoupper(substr($leaderboard[1]['name'], 0, 2)) }}
@@ -88,7 +88,7 @@
                         </div>
                         <div class="w-18 h-18 sm:w-24 sm:h-24 rounded-2xl p-1 bg-white dark:bg-neutral-900 border-2 border-amber-400 shadow-md ring-4 ring-amber-400/20 flex items-center justify-center mb-2 group-hover:scale-105 transition-transform">
                             @if ($leaderboard[0]['logoUrl'])
-                                <img src="{{ $leaderboard[0]['logoUrl'] }}" alt="{{ $leaderboard[0]['name'] }}" class="w-full h-full object-contain" />
+                                <img src="{{ $leaderboard[0]['logoUrl'] }}" alt="{{ $leaderboard[0]['name'] }}" loading="lazy" decoding="async" class="w-full h-full object-contain" />
                             @else
                                 <span class="font-black text-lg sm:text-xl text-amber-500">
                                     {{ strtoupper(substr($leaderboard[0]['name'], 0, 2)) }}
@@ -117,7 +117,7 @@
                         </div>
                         <div class="w-14 h-14 sm:w-18 sm:h-18 rounded-2xl p-1 bg-white dark:bg-neutral-900 border-2 border-amber-700/40 shadow-sm flex items-center justify-center mb-2 group-hover:scale-105 transition-transform">
                             @if ($leaderboard[2]['logoUrl'])
-                                <img src="{{ $leaderboard[2]['logoUrl'] }}" alt="{{ $leaderboard[2]['name'] }}" class="w-full h-full object-contain" />
+                                <img src="{{ $leaderboard[2]['logoUrl'] }}" alt="{{ $leaderboard[2]['name'] }}" loading="lazy" decoding="async" class="w-full h-full object-contain" />
                             @else
                                 <span class="font-black text-sm text-amber-700 dark:text-amber-500">
                                     {{ strtoupper(substr($leaderboard[2]['name'], 0, 2)) }}

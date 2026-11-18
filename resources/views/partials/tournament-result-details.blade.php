@@ -81,7 +81,7 @@
                                                         <div class="flex items-center gap-2 min-w-0">
                                                             <div class="w-6 h-6 rounded-md bg-neutral-100 dark:bg-neutral-800 flex items-center justify-center shrink-0 text-[10px] font-black text-brand-600 dark:text-brand-400">
                                                                 @if ($t['logoUrl'])
-                                                                    <img src="{{ $t['logoUrl'] }}" alt="{{ $t['name'] }}" class="w-full h-full object-contain" />
+                                                                    <img src="{{ $t['logoUrl'] }}" alt="{{ $t['name'] }}" loading="lazy" decoding="async" class="w-full h-full object-contain" />
                                                                 @else
                                                                     {{ strtoupper(substr($t['name'], 0, 2)) }}
                                                                 @endif
@@ -163,7 +163,7 @@
                                                 <div class="flex items-center gap-2.5 min-w-0">
                                                     <div class="w-6 h-6 rounded-md bg-neutral-100 dark:bg-neutral-800 flex items-center justify-center shrink-0 text-[10px] font-black text-brand-600 dark:text-brand-400">
                                                         @if ($t['logoUrl'])
-                                                            <img src="{{ $t['logoUrl'] }}" alt="{{ $t['name'] }}" class="w-full h-full object-contain" />
+                                                            <img src="{{ $t['logoUrl'] }}" alt="{{ $t['name'] }}" loading="lazy" decoding="async" class="w-full h-full object-contain" />
                                                         @else
                                                             {{ strtoupper(substr($t['name'], 0, 2)) }}
                                                         @endif
@@ -240,7 +240,7 @@
                                 <div class="flex items-center gap-2 w-5/12 min-w-0 {{ $match->winnerId === $match->teamAId ? 'font-bold text-neutral-900 dark:text-white' : 'text-neutral-500 dark:text-neutral-400 font-medium' }}">
                                     <div class="w-5 h-5 rounded bg-neutral-100 dark:bg-neutral-800 flex items-center justify-center shrink-0 text-[9px] font-black {{ $match->winnerId === $match->teamAId ? 'text-brand-600 dark:text-brand-400' : 'text-neutral-400' }}">
                                         @if ($match->teamA?->logoUrl)
-                                            <img src="{{ $match->teamA->logoUrl }}" alt="{{ $match->teamA->name }}" class="w-full h-full object-contain" />
+                                            <img src="{{ $match->teamA->logoUrl }}" alt="{{ $match->teamA->name }}" loading="lazy" decoding="async" class="w-full h-full object-contain" />
                                         @else
                                             {{ strtoupper(substr($match->teamA?->name ?? 'T', 0, 2)) }}
                                         @endif
@@ -264,7 +264,7 @@
                                     <span class="truncate text-xs" title="{{ $match->teamB?->name }}">{{ $match->teamB?->name ?? 'TBD' }}</span>
                                     <div class="w-5 h-5 rounded bg-neutral-100 dark:bg-neutral-800 flex items-center justify-center shrink-0 text-[9px] font-black {{ $match->winnerId === $match->teamBId ? 'text-brand-600 dark:text-brand-400' : 'text-neutral-400' }}">
                                         @if ($match->teamB?->logoUrl)
-                                            <img src="{{ $match->teamB->logoUrl }}" alt="{{ $match->teamB->name }}" class="w-full h-full object-contain" />
+                                            <img src="{{ $match->teamB->logoUrl }}" alt="{{ $match->teamB->name }}" loading="lazy" decoding="async" class="w-full h-full object-contain" />
                                         @else
                                             {{ strtoupper(substr($match->teamB?->name ?? 'T', 0, 2)) }}
                                         @endif

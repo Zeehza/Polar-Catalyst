@@ -57,7 +57,7 @@
         <div class="flex items-center gap-1.5 min-w-0 pr-1.5">
             <div class="w-4 h-4 md:w-5 md:h-5 rounded bg-neutral-100 dark:bg-neutral-800 flex items-center justify-center shrink-0 text-[8px] md:text-[9px] font-black {{ $isWinnerA ? 'text-brand-600 dark:text-brand-400' : 'text-neutral-400' }}">
                 @if (!empty($series['teamA']['logoUrl']))
-                    <img src="{{ $series['teamA']['logoUrl'] }}" alt="{{ $series['teamA']['name'] ?? 'TBD' }}" class="w-full h-full object-contain" />
+                    <img src="{{ $series['teamA']['logoUrl'] }}" alt="{{ $series['teamA']['name'] ?? 'TBD' }}" loading="lazy" decoding="async" class="w-full h-full object-contain" />
                 @else
                     {{ strtoupper(substr($series['teamA']['name'] ?? 'T', 0, 2)) }}
                 @endif
@@ -89,7 +89,7 @@
         <div class="flex items-center gap-1.5 min-w-0 pr-1.5">
             <div class="w-4 h-4 md:w-5 md:h-5 rounded bg-neutral-100 dark:bg-neutral-800 flex items-center justify-center shrink-0 text-[8px] md:text-[9px] font-black {{ $isWinnerB ? 'text-brand-600 dark:text-brand-400' : 'text-neutral-400' }}">
                 @if (!empty($series['teamB']['logoUrl']))
-                    <img src="{{ $series['teamB']['logoUrl'] }}" alt="{{ $series['teamB']['name'] ?? 'TBD' }}" class="w-full h-full object-contain" />
+                    <img src="{{ $series['teamB']['logoUrl'] }}" alt="{{ $series['teamB']['name'] ?? 'TBD' }}" loading="lazy" decoding="async" class="w-full h-full object-contain" />
                 @else
                     {{ strtoupper(substr($series['teamB']['name'] ?? 'T', 0, 2)) }}
                 @endif

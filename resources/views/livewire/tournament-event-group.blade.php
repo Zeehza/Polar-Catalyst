@@ -95,6 +95,7 @@
                                         alt="{{ $team->name }}"
                                         class="w-full h-full object-contain filter drop-shadow-xs"
                                         loading="lazy"
+                                        decoding="async"
                                     />
                                 @else
                                     <span class="font-black text-xs text-brand-600 dark:text-brand-400 tracking-wider">
@@ -221,7 +222,7 @@
                                         <div class="flex items-center gap-2.5 min-w-0 pr-2">
                                             <div class="w-6 h-6 rounded-md bg-neutral-100 dark:bg-neutral-800 flex items-center justify-center shrink-0 text-[10px] font-black text-neutral-500">
                                                 @if ($match->teamA?->logoUrl)
-                                                    <img src="{{ $match->teamA->logoUrl }}" alt="{{ $match->teamA->name }}" class="w-full h-full object-contain" />
+                                                    <img src="{{ $match->teamA->logoUrl }}" alt="{{ $match->teamA->name }}" loading="lazy" decoding="async" class="w-full h-full object-contain" />
                                                 @else
                                                     {{ strtoupper(substr($match->teamA?->name ?? 'T', 0, 2)) }}
                                                 @endif
@@ -240,7 +241,7 @@
                                         <div class="flex items-center gap-2.5 min-w-0 pr-2">
                                             <div class="w-6 h-6 rounded-md bg-neutral-100 dark:bg-neutral-800 flex items-center justify-center shrink-0 text-[10px] font-black text-neutral-500">
                                                 @if ($match->teamB?->logoUrl)
-                                                    <img src="{{ $match->teamB->logoUrl }}" alt="{{ $match->teamB->name }}" class="w-full h-full object-contain" />
+                                                    <img src="{{ $match->teamB->logoUrl }}" alt="{{ $match->teamB->name }}" loading="lazy" decoding="async" class="w-full h-full object-contain" />
                                                 @else
                                                     {{ strtoupper(substr($match->teamB?->name ?? 'T', 0, 2)) }}
                                                 @endif
