@@ -237,15 +237,11 @@
 
                             <div class="flex items-center justify-between gap-2">
                                 <!-- Team A -->
-                                <div class="flex items-center gap-2 w-5/12 min-w-0 {{ $match->winnerId === $match->teamAId ? 'font-bold text-neutral-900 dark:text-white' : 'text-neutral-500 dark:text-neutral-400 font-medium' }}">
-                                    <div class="w-5 h-5 rounded bg-neutral-100 dark:bg-neutral-800 flex items-center justify-center shrink-0 text-[9px] font-black {{ $match->winnerId === $match->teamAId ? 'text-brand-600 dark:text-brand-400' : 'text-neutral-400' }}">
-                                        @if ($match->teamA?->logoUrl)
-                                            <img src="{{ $match->teamA->logoUrl }}" alt="{{ $match->teamA->name }}" loading="lazy" decoding="async" class="w-full h-full object-contain" />
-                                        @else
-                                            {{ strtoupper(substr($match->teamA?->name ?? 'T', 0, 2)) }}
-                                        @endif
-                                    </div>
+                                <div class="flex items-center gap-1.5 w-5/12 min-w-0 {{ $match->winnerId === $match->teamAId ? 'font-bold text-neutral-900 dark:text-white' : 'text-neutral-500 dark:text-neutral-400 font-medium' }}">
                                     <span class="truncate text-xs" title="{{ $match->teamA?->name }}">{{ $match->teamA?->name ?? 'TBD' }}</span>
+                                    @if ($match->winnerId === $match->teamAId)
+                                        <x-lucide-trophy class="h-3 w-3 text-amber-500 shrink-0" />
+                                    @endif
                                 </div>
 
                                 <!-- Score Chip -->
@@ -260,15 +256,11 @@
                                 </div>
 
                                 <!-- Team B -->
-                                <div class="flex items-center justify-end gap-2 w-5/12 min-w-0 text-right {{ $match->winnerId === $match->teamBId ? 'font-bold text-neutral-900 dark:text-white' : 'text-neutral-500 dark:text-neutral-400 font-medium' }}">
+                                <div class="flex items-center justify-end gap-1.5 w-5/12 min-w-0 text-right {{ $match->winnerId === $match->teamBId ? 'font-bold text-neutral-900 dark:text-white' : 'text-neutral-500 dark:text-neutral-400 font-medium' }}">
+                                    @if ($match->winnerId === $match->teamBId)
+                                        <x-lucide-trophy class="h-3 w-3 text-amber-500 shrink-0" />
+                                    @endif
                                     <span class="truncate text-xs" title="{{ $match->teamB?->name }}">{{ $match->teamB?->name ?? 'TBD' }}</span>
-                                    <div class="w-5 h-5 rounded bg-neutral-100 dark:bg-neutral-800 flex items-center justify-center shrink-0 text-[9px] font-black {{ $match->winnerId === $match->teamBId ? 'text-brand-600 dark:text-brand-400' : 'text-neutral-400' }}">
-                                        @if ($match->teamB?->logoUrl)
-                                            <img src="{{ $match->teamB->logoUrl }}" alt="{{ $match->teamB->name }}" loading="lazy" decoding="async" class="w-full h-full object-contain" />
-                                        @else
-                                            {{ strtoupper(substr($match->teamB?->name ?? 'T', 0, 2)) }}
-                                        @endif
-                                    </div>
                                 </div>
                             </div>
                         </div>
