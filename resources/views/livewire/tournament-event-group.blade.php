@@ -85,25 +85,54 @@
                     </span>
                 </div>
 
-                <div class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-3 sm:gap-4">
+                <div class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-4 lg:grid-cols-8 gap-3 sm:gap-4 pt-1">
                     @foreach ($displayTeams as $team)
-                        <div class="group flex flex-col items-center p-3 sm:p-3.5 rounded-2xl bg-neutral-50/60 dark:bg-neutral-950/40 border border-neutral-200/60 dark:border-neutral-800/80 hover:border-brand-500/40 hover:bg-white dark:hover:bg-neutral-900 hover:shadow-xs transition-all hover:-translate-y-0.5">
-                            <div class="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl flex items-center justify-center p-1.5 relative overflow-hidden bg-white dark:bg-neutral-900 border border-neutral-200/60 dark:border-neutral-800 shadow-2xs group-hover:scale-105 transition-transform">
-                                @if ($team->logoUrl)
-                                    <img
-                                        src="{{ $team->logoUrl }}"
-                                        alt="{{ $team->name }}"
-                                        class="w-full h-full object-contain filter drop-shadow-xs"
-                                        loading="lazy"
-                                        decoding="async"
-                                    />
-                                @else
-                                    <span class="font-black text-sm text-brand-600 dark:text-brand-400 tracking-wider">
-                                        {{ strtoupper(substr($team->name, 0, 2)) }}
-                                    </span>
-                                @endif
+                        @php
+                            $rawName = trim($team->name);
+                            $words = preg_split('/\s+/', $rawName);
+                            if (count($words) >= 2) {
+                                $shortCode = strtoupper(substr($words[0], 0, 1) . substr($words[1], 0, 1));
+                            } elseif (strlen($rawName) <= 4) {
+                                $shortCode = strtoupper($rawName);
+                            } else {
+                                $shortCode = strtoupper(substr($rawName, 0, 3));
+                            }
+                        @endphp
+                        <div class="group flex flex-col items-center cursor-pointer">
+                            <!-- MPL Style Hanging Pennant Banner -->
+                            <div class="relative w-full filter drop-shadow-md group-hover:drop-shadow-xl transition-all duration-300 group-hover:-translate-y-2">
+                                <div
+                                    class="relative w-full bg-white dark:bg-neutral-900 border border-b-0 border-neutral-200/80 dark:border-neutral-800 rounded-t-xl flex flex-col items-center pb-8 transition-colors overflow-hidden"
+                                    style="clip-path: polygon(0 0, 100% 0, 100% 86%, 50% 100%, 0 86%);"
+                                >
+                                    <!-- MPL Maroon Top Ribbon -->
+                                    <div class="w-full py-1.5 sm:py-2 px-1 bg-[#720e17] dark:bg-[#7f131f] text-center border-b border-black/10 shadow-xs">
+                                        <span class="font-black text-[11px] sm:text-xs text-white tracking-widest uppercase block truncate">
+                                            {{ $shortCode }}
+                                        </span>
+                                    </div>
+
+                                    <!-- Large Logo Display Area -->
+                                    <div class="w-full h-24 sm:h-28 flex items-center justify-center p-3 sm:p-3.5">
+                                        @if ($team->logoUrl)
+                                            <img
+                                                src="{{ $team->logoUrl }}"
+                                                alt="{{ $team->name }}"
+                                                class="w-full h-full max-h-20 sm:max-h-22 object-contain filter drop-shadow-xs group-hover:scale-110 transition-transform duration-300"
+                                                loading="lazy"
+                                                decoding="async"
+                                            />
+                                        @else
+                                            <div class="w-12 h-12 rounded-xl bg-neutral-100 dark:bg-neutral-800 flex items-center justify-center text-xs font-black text-brand-600 dark:text-brand-400 group-hover:scale-110 transition-transform">
+                                                {{ $shortCode }}
+                                            </div>
+                                        @endif
+                                    </div>
+                                </div>
                             </div>
-                            <span class="mt-2.5 text-xs font-bold text-neutral-800 dark:text-neutral-200 text-center truncate w-full px-1" title="{{ $team->name }}">
+
+                            <!-- Full Team Name & Group below Banner -->
+                            <span class="mt-2 text-xs font-bold text-neutral-800 dark:text-neutral-200 text-center truncate w-full px-1 group-hover:text-brand-500 transition-colors" title="{{ $team->name }}">
                                 {{ $team->name }}
                             </span>
                             @if ($team->group)
