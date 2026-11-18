@@ -30,6 +30,7 @@ class CreateTournamentForm extends Component
 
     public function mount(string $initialName = '', string $initialGame = '')
     {
+        abort_unless(auth('admin')->check(), 403);
         $all = Tournament::orderByDesc('createdAt')->get();
         $grouped = [];
 

@@ -18,7 +18,6 @@ class TournamentMatch extends Model
     const UPDATED_AT = 'updatedAt';
 
     protected $fillable = [
-        'id',
         'tournamentId',
         'roundNumber',
         'matchOrder',

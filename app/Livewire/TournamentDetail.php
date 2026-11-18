@@ -50,6 +50,7 @@ class TournamentDetail extends Component
 
     public function mount(string $tournamentId)
     {
+        abort_unless(auth('admin')->check(), 403);
         $this->tournamentId = $tournamentId;
         $this->loadTournamentData();
     }
@@ -97,8 +98,8 @@ class TournamentDetail extends Component
         $this->validate([
             'name' => 'required|string|max:100',
             'season' => 'required|string|max:50',
-            'status' => 'required|string',
-            'type' => 'required|string',
+            'status' => 'required|string|in:DRAFT,ONGOING,COMPLETED',
+            'type' => 'required|string|in:PLAYOFF,GROUP_STAGE',
         ]);
 
         $tournament = Tournament::findOrFail($this->tournamentId);
@@ -183,7 +184,7 @@ class TournamentDetail extends Component
         $this->validate([
             'editingTeamShortName' => 'nullable|string|max:10',
             'editingTeamLogoUrl' => 'nullable|url|max:500',
-            'editingTeamLogoFile' => 'nullable|image|max:2048',
+            'editingTeamLogoFile' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
         ]);
 
         $finalLogoUrl = trim($this->editingTeamLogoUrl) ?: null;
@@ -264,10 +265,16 @@ class TournamentDetail extends Component
         } elseif ($winnerChoice === 'NONE') {
             $winnerId = null;
         } else {
-            $winnerId = $winnerChoice;
+            // Validate that the chosen winner is one of the match participants
+            if ($winnerChoice === $match->teamAId || $winnerChoice === $match->teamBId) {
+                $winnerId = $winnerChoice;
+            }
         }
 
         $status = $this->matchStatuses[$matchId] ?? 'SCHEDULED';
+        if (!in_array($status, ['SCHEDULED', 'ONGOING', 'COMPLETED', 'CANCELLED'], true)) {
+            $status = 'SCHEDULED';
+        }
         $scheduledAt = !empty($this->matchSchedules[$matchId]) ? $this->matchSchedules[$matchId] : null;
 
         $playedAt = ($status === 'COMPLETED' && $match->status !== 'COMPLETED') ? now() : $match->playedAt;

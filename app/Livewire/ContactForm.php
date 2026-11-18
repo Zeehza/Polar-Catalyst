@@ -74,7 +74,7 @@ class ContactForm extends Component
             ]);
 
             // Discord Webhook
-            $webhookUrl = config('services.discord.webhook_url') ?: env('DISCORD_WEBHOOK_URL');
+            $webhookUrl = config('services.discord.webhook_url');
             if ($webhookUrl) {
                 try {
                     $discordPayload = [
@@ -104,7 +104,7 @@ class ContactForm extends Component
             }
 
             // Resend Email (if key configured)
-            $resendKey = env('RESEND_API_KEY');
+            $resendKey = config('services.resend.key');
             if ($resendKey) {
                 try {
                     $safeName = e($submission->name);

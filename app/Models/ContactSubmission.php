@@ -17,7 +17,6 @@ class ContactSubmission extends Model
     const UPDATED_AT = null;
 
     protected $fillable = [
-        'id',
         'name',
         'company',
         'email',
