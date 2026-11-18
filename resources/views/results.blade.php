@@ -15,7 +15,7 @@
                 Results &amp; Leaderboard
             </h1>
             <p class="text-sm md:text-base text-brand-200/90 max-w-xl text-pretty">
-                Rekapitulasi capaian juara, statistik performa kompetitif, dan arsip hasil pertandingan resmi setiap musim.
+                Rekap podium juara, persentase kemenangan, dan riwayat hasil laga per season.
             </p>
         </div>
     </section>
