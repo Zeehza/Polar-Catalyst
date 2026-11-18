@@ -48,7 +48,7 @@
         <div class="w-full overflow-x-auto lg:overflow-x-visible pb-2 scrollbar-thin">
             @if ($isDoubleElimination)
                 {{-- DOUBLE ELIMINATION --}}
-                <div class="flex flex-col gap-8 w-full min-w-[680px] lg:min-w-0">
+                <div class="flex flex-col gap-8 w-full min-w-170 lg:min-w-0">
                     <!-- UPPER BRACKET -->
                     <div class="flex flex-col gap-3 w-full">
                         <div class="flex items-center gap-2">
@@ -125,7 +125,7 @@
                 </div>
             @else
                 {{-- SINGLE ELIMINATION --}}
-                <div class="flex items-stretch gap-2.5 sm:gap-3.5 md:gap-4 w-full min-w-[600px] lg:min-w-0">
+                <div class="flex items-stretch gap-2.5 sm:gap-3.5 md:gap-4 w-full min-w-150 lg:min-w-0">
                     @foreach ($singleElimRounds as $round)
                         <div class="flex-1 min-w-0 flex flex-col gap-2.5">
                             <div class="text-[10px] font-bold text-neutral-400 uppercase tracking-wider text-center pb-1 border-b border-neutral-200/80 dark:border-neutral-800 truncate">
