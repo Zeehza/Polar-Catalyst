@@ -30,12 +30,17 @@
                 :matches="$activeSeason->matches"
                 :tournamentName="$tournamentName . ' - ' . $activeSeason->season"
                 :championName="$leaderboard[0]['name'] ?? null"
-            />
+            ></x-tournament-bracket>
         </div>
     @endif
 
     <!-- Standings & Match History View -->
-    <div x-show="playoffTab === 'details' || '{{ $activeSeason->type }}' !== 'PLAYOFF'" class="w-full">
+    <div
+        @if ($activeSeason->type === 'PLAYOFF')
+            x-show="playoffTab === 'details'"
+        @endif
+        class="w-full"
+    >
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 w-full">
             <!-- LEADERBOARD / KLASEMEN (Left) -->
             <div class="lg:col-span-7 flex flex-col gap-5">
@@ -65,9 +70,15 @@
                                             @forelse ($groupLb as $idx => $t)
                                                 <tr class="hover:bg-neutral-50/60 dark:hover:bg-neutral-800/40 transition-colors">
                                                     <td class="px-3.5 py-2.5 text-center font-bold">
-                                                        <span class="font-mono text-xs {{ $idx === 0 ? 'text-amber-500 font-black' : ($idx === 1 ? 'text-slate-400 font-bold' : ($idx === 2 ? 'text-amber-700 font-bold' : 'text-neutral-400')) }}">
-                                                            {{ $idx + 1 }}
-                                                        </span>
+                                                        @if ($idx === 0)
+                                                            <span class="font-mono text-xs text-amber-500 font-black">1</span>
+                                                        @elseif ($idx === 1)
+                                                            <span class="font-mono text-xs text-slate-400 font-bold">2</span>
+                                                        @elseif ($idx === 2)
+                                                            <span class="font-mono text-xs text-amber-700 font-bold">3</span>
+                                                        @else
+                                                            <span class="font-mono text-xs text-neutral-400">{{ $idx + 1 }}</span>
+                                                        @endif
                                                     </td>
                                                     <td class="px-3.5 py-2.5">
                                                         <div class="flex items-center gap-2 min-w-0">
@@ -90,7 +101,7 @@
                                                     <td class="px-3.5 py-2.5 text-right">
                                                         <div class="flex items-center justify-end gap-2">
                                                             <div class="w-12 h-1.5 rounded-full bg-neutral-100 dark:bg-neutral-800 overflow-hidden shrink-0 hidden sm:block">
-                                                                <div class="h-full bg-brand-500 rounded-full" style="width: {{ $t['winRate'] }}%"></div>
+                                                                <div class="h-full bg-brand-500 rounded-full" :style="'width: ' + {{ (float) $t['winRate'] }} + '%'"></div>
                                                             </div>
                                                             <span class="font-mono font-bold text-xs text-brand-600 dark:text-brand-400 tabular-nums">
                                                                 {{ round($t['winRate']) }}%
@@ -138,9 +149,15 @@
                                     @forelse ($leaderboard as $idx => $t)
                                         <tr class="hover:bg-neutral-50/60 dark:hover:bg-neutral-800/40 transition-colors">
                                             <td class="px-3.5 py-3 text-center font-bold">
-                                                <span class="font-mono text-xs {{ $idx === 0 ? 'text-amber-500 font-black' : ($idx === 1 ? 'text-slate-400 font-bold' : ($idx === 2 ? 'text-amber-700 font-bold' : 'text-neutral-400')) }}">
-                                                    {{ $idx + 1 }}
-                                                </span>
+                                                @if ($idx === 0)
+                                                    <span class="font-mono text-xs text-amber-500 font-black">1</span>
+                                                @elseif ($idx === 1)
+                                                    <span class="font-mono text-xs text-slate-400 font-bold">2</span>
+                                                @elseif ($idx === 2)
+                                                    <span class="font-mono text-xs text-amber-700 font-bold">3</span>
+                                                @else
+                                                    <span class="font-mono text-xs text-neutral-400">{{ $idx + 1 }}</span>
+                                                @endif
                                             </td>
                                             <td class="px-3.5 py-3">
                                                 <div class="flex items-center gap-2.5 min-w-0">
@@ -170,7 +187,7 @@
                                             <td class="px-3.5 py-3 text-right">
                                                 <div class="flex items-center justify-end gap-2">
                                                     <div class="w-12 sm:w-16 h-1.5 rounded-full bg-neutral-100 dark:bg-neutral-800 overflow-hidden shrink-0 hidden sm:block">
-                                                        <div class="h-full bg-brand-500 rounded-full" style="width: {{ $t['winRate'] }}%"></div>
+                                                        <div class="h-full bg-brand-500 rounded-full" :style="'width: ' + {{ (float) $t['winRate'] }} + '%'"></div>
                                                     </div>
                                                     <span class="font-mono font-bold text-xs text-brand-600 dark:text-brand-400 tabular-nums">
                                                         {{ round($t['winRate']) }}%
