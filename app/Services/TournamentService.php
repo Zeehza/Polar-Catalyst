@@ -226,8 +226,8 @@ class TournamentService
             if (!isset($seriesMap[$mOrder])) {
                 $seriesMap[$mOrder] = [
                     'matchOrder' => $mOrder,
-                    'teamA' => $m->teamA ? ['id' => (string) $m->teamA->id, 'name' => $m->teamA->name] : null,
-                    'teamB' => $m->teamB ? ['id' => (string) $m->teamB->id, 'name' => $m->teamB->name] : null,
+                    'teamA' => $m->teamA ? ['id' => (string) $m->teamA->id, 'name' => $m->teamA->name, 'logoUrl' => $m->teamA->logoUrl] : null,
+                    'teamB' => $m->teamB ? ['id' => (string) $m->teamB->id, 'name' => $m->teamB->name, 'logoUrl' => $m->teamB->logoUrl] : null,
                     'games' => [],
                     'gamesWonA' => 0,
                     'gamesWonB' => 0,
@@ -240,11 +240,11 @@ class TournamentService
             $seriesMap[$mOrder]['games'][] = $m;
 
             if (!$seriesMap[$mOrder]['teamA'] && $m->teamA) {
-                $seriesMap[$mOrder]['teamA'] = ['id' => (string) $m->teamA->id, 'name' => $m->teamA->name];
+                $seriesMap[$mOrder]['teamA'] = ['id' => (string) $m->teamA->id, 'name' => $m->teamA->name, 'logoUrl' => $m->teamA->logoUrl];
             } elseif (!$seriesMap[$mOrder]['teamB'] && $m->teamB && $seriesMap[$mOrder]['teamA'] && (string) $m->teamB->id !== $seriesMap[$mOrder]['teamA']['id']) {
-                $seriesMap[$mOrder]['teamB'] = ['id' => (string) $m->teamB->id, 'name' => $m->teamB->name];
+                $seriesMap[$mOrder]['teamB'] = ['id' => (string) $m->teamB->id, 'name' => $m->teamB->name, 'logoUrl' => $m->teamB->logoUrl];
             } elseif (!$seriesMap[$mOrder]['teamB'] && $m->teamA && $seriesMap[$mOrder]['teamA'] && (string) $m->teamA->id !== $seriesMap[$mOrder]['teamA']['id']) {
-                $seriesMap[$mOrder]['teamB'] = ['id' => (string) $m->teamA->id, 'name' => $m->teamA->name];
+                $seriesMap[$mOrder]['teamB'] = ['id' => (string) $m->teamA->id, 'name' => $m->teamA->name, 'logoUrl' => $m->teamA->logoUrl];
             }
 
             if ($m->status === 'ONGOING') {
