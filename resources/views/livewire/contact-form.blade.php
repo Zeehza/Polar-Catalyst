@@ -51,7 +51,7 @@
                             id="name"
                             wire:model="name"
                             required
-                            placeholder="Masukkan nama lengkap"
+                            placeholder="Nama lengkap"
                             class="w-full pl-11 pr-4 py-3 bg-neutral-50 dark:bg-neutral-950 border border-neutral-200 dark:border-neutral-800 rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-all dark:text-white"
                         />
                     </div>
@@ -71,7 +71,7 @@
                             type="text"
                             id="company"
                             wire:model="company"
-                            placeholder="Nama perusahaan atau organisasi (opsional)"
+                            placeholder="Perusahaan (opsional)"
                             class="w-full pl-11 pr-4 py-3 bg-neutral-50 dark:bg-neutral-950 border border-neutral-200 dark:border-neutral-800 rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-all dark:text-white"
                         />
                     </div>
@@ -93,7 +93,7 @@
                         id="email"
                         wire:model="email"
                         required
-                        placeholder="Masukkan alamat email"
+                        placeholder="Alamat email"
                         class="w-full pl-11 pr-4 py-3 bg-neutral-50 dark:bg-neutral-950 border border-neutral-200 dark:border-neutral-800 rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-all dark:text-white"
                     />
                 </div>
@@ -110,7 +110,7 @@
                     wire:model="message"
                     required
                     rows="5"
-                    placeholder="Tulis pesan atau penawaran Anda di sini..."
+                    placeholder="Tulis pesan..."
                     class="w-full p-4 bg-neutral-50 dark:bg-neutral-950 border border-neutral-200 dark:border-neutral-800 rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-all dark:text-white resize-y"
                 ></textarea>
                 @error('message') <span class="text-xs text-red-500 mt-1">{{ $message }}</span> @enderror

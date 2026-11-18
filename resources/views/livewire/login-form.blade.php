@@ -12,7 +12,7 @@
                 wire:model="username"
                 required
                 class="w-full pl-11 pr-4 py-3 bg-neutral-50 dark:bg-neutral-950 border border-neutral-200 dark:border-neutral-800 rounded-xl focus:ring-2 focus:ring-brand-500 outline-none transition-all dark:text-white"
-                placeholder="Masukkan username"
+                placeholder="Username"
             />
         </div>
         @error('username') <span class="text-xs text-red-500 mt-1">{{ $message }}</span> @enderror
@@ -31,7 +31,7 @@
                 wire:model="password"
                 required
                 class="w-full pl-11 pr-4 py-3 bg-neutral-50 dark:bg-neutral-950 border border-neutral-200 dark:border-neutral-800 rounded-xl focus:ring-2 focus:ring-brand-500 outline-none transition-all dark:text-white"
-                placeholder="Masukkan password"
+                placeholder="Password"
             />
         </div>
         @error('password') <span class="text-xs text-red-500 mt-1">{{ $message }}</span> @enderror

@@ -68,7 +68,7 @@
                     id="name"
                     wire:model.live="name"
                     required
-                    placeholder="Masukkan nama turnamen"
+                    placeholder="Nama turnamen"
                     class="w-full px-4 py-3 bg-neutral-50 dark:bg-neutral-950 border border-neutral-200 dark:border-neutral-800 rounded-xl focus:ring-2 focus:ring-brand-500 outline-none transition-all dark:text-white"
                 />
                 <p class="text-xs text-neutral-500">
@@ -86,7 +86,7 @@
                     id="game"
                     wire:model="game"
                     required
-                    placeholder="Masukkan nama game"
+                    placeholder="Nama game"
                     class="w-full px-4 py-3 bg-neutral-50 dark:bg-neutral-950 border border-neutral-200 dark:border-neutral-800 rounded-xl focus:ring-2 focus:ring-brand-500 outline-none transition-all dark:text-white"
                 />
                 @error('game') <span class="text-xs text-red-500 mt-1">{{ $message }}</span> @enderror
@@ -98,16 +98,13 @@
                 <label for="season" class="text-sm font-semibold text-neutral-700 dark:text-neutral-300">
                     Label Season *
                 </label>
-                <span class="text-xs text-brand-600 dark:text-brand-400 font-medium">
-                    Contoh: Season 1, Season 2, S1 2026
-                </span>
             </div>
             <input
                 type="text"
                 id="season"
                 wire:model.live="season"
                 required
-                placeholder="Masukkan label season"
+                placeholder="Label season"
                 class="w-full px-4 py-3 bg-neutral-50 dark:bg-neutral-950 border rounded-xl focus:ring-2 focus:ring-brand-500 outline-none transition-all dark:text-white font-medium {{ $isDuplicateSeason ? 'border-amber-500 focus:border-amber-500' : 'border-neutral-200 dark:border-neutral-800' }}"
             />
             @if ($isDuplicateSeason)

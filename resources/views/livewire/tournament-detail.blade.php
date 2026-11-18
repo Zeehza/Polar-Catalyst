@@ -186,7 +186,7 @@
                         <input
                             type="text"
                             wire:model="newTeamName"
-                            placeholder="Nama tim (misal: Rex Regum Qeon)"
+                            placeholder="Nama tim"
                             required
                             class="w-full px-3 py-2 bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-lg outline-none text-xs sm:text-sm dark:text-white"
                         />
@@ -581,7 +581,7 @@
                         <input
                             type="text"
                             wire:model="editingTeamShortName"
-                            placeholder="Misal: RRQ, EVOS, BTR, DQ"
+                            placeholder="Singkatan tim (opsional)"
                             maxlength="10"
                             class="w-full px-3.5 py-2 text-xs md:text-sm bg-neutral-50 dark:bg-neutral-950 border border-neutral-200 dark:border-neutral-800 rounded-xl outline-none focus:border-brand-500 dark:text-white uppercase font-mono font-semibold transition-colors"
                         />
@@ -602,7 +602,7 @@
                         <input
                             type="text"
                             wire:model.live.debounce.300ms="editingTeamLogoUrl"
-                            placeholder="https://contoh.com/logo-tim.png"
+                            placeholder="Link URL logo"
                             class="w-full px-3.5 py-2 text-xs md:text-sm bg-neutral-50 dark:bg-neutral-950 border border-neutral-200 dark:border-neutral-800 rounded-xl outline-none focus:border-brand-500 dark:text-white transition-colors"
                         />
                         <p class="text-[11px] text-neutral-400">
