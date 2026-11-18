@@ -51,52 +51,7 @@
                         <span>Gabung Server Discord</span>
                         <x-lucide-arrow-up-right class="h-4 w-4" />
                     </a>
-                </div>
-
-                <!-- Collaboration Details Card -->
-                <div class="bg-white dark:bg-neutral-900 rounded-3xl border border-neutral-200/80 dark:border-neutral-800 p-6 md:p-8 shadow-xs flex flex-col gap-5">
-                    <div>
-                        <h2 class="text-base font-bold text-neutral-900 dark:text-white mb-1">
-                            Layanan &amp; Kemitraan
-                        </h2>
-                        <p class="text-xs text-neutral-500 dark:text-neutral-400">
-                            Fokus kolaborasi yang kami jalankan bersama komunitas:
-                        </p>
-                    </div>
-
-                    <div class="space-y-4">
-                        <div class="flex items-start gap-3">
-                            <div class="w-2 h-2 rounded-full bg-brand-500 mt-1.5 shrink-0"></div>
-                            <div>
-                                <h3 class="text-xs font-bold text-neutral-900 dark:text-white">Turnamen &amp; Event Organizer</h3>
-                                <p class="text-xs text-neutral-500 dark:text-neutral-400 leading-relaxed mt-0.5">
-                                    Manajemen bracket, aturan pertandingan, dan penyelenggaraan kompetisi komunitas.
-                                </p>
-                            </div>
-                        </div>
-
-                        <div class="flex items-start gap-3">
-                            <div class="w-2 h-2 rounded-full bg-brand-500 mt-1.5 shrink-0"></div>
-                            <div>
-                                <h3 class="text-xs font-bold text-neutral-900 dark:text-white">Media Partner &amp; Sponsor</h3>
-                                <p class="text-xs text-neutral-500 dark:text-neutral-400 leading-relaxed mt-0.5">
-                                    Promosi bersama, aktivasi komunitas kreatif, dan kemitraan brand.
-                                </p>
-                            </div>
-                        </div>
-
-                        <div class="flex items-start gap-3">
-                            <div class="w-2 h-2 rounded-full bg-brand-500 mt-1.5 shrink-0"></div>
-                            <div>
-                                <h3 class="text-xs font-bold text-neutral-900 dark:text-white">Kritik, Saran &amp; Ide Baru</h3>
-                                <p class="text-xs text-neutral-500 dark:text-neutral-400 leading-relaxed mt-0.5">
-                                    Masukan terbuka untuk pengembangan event dan platform Polar Catalyst ke depan.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="pt-4 border-t border-neutral-100 dark:border-neutral-800 flex items-center gap-2 text-xs text-neutral-500 dark:text-neutral-400">
+                    <div class="pt-4 mt-5 border-t border-neutral-100 dark:border-neutral-800 flex items-center gap-2 text-xs text-neutral-500 dark:text-neutral-400">
                         <span class="w-2 h-2 rounded-full bg-emerald-500 shrink-0 animate-pulse"></span>
                         <span>Respon formulir biasanya dalam 1x24 jam kerja.</span>
                     </div>
