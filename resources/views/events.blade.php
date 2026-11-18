@@ -16,7 +16,7 @@
                 Events &amp; Schedules
             </h1>
             <p class="text-sm md:text-base text-brand-200/90 max-w-xl text-pretty">
-                Jadwal pertandingan, bagan bracket, dan pantauan tim komunitas Polar Catalyst per season.
+                Jadwal resmi kompetisi, struktur bagan turnamen, dan perkembangan laga di setiap musim Polar Catalyst.
             </p>
         </div>
     </section>
