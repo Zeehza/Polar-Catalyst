@@ -5,8 +5,7 @@
     <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 pb-6 border-b border-neutral-200/80 dark:border-neutral-800">
         <div class="flex flex-col gap-2">
             <div class="flex items-center gap-2 flex-wrap">
-                <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider text-brand-600 dark:text-brand-400 bg-brand-500/10 border border-brand-500/20">
-                    <x-lucide-gamepad-2 class="h-3.5 w-3.5" />
+                <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider text-brand-600 dark:text-brand-400 bg-brand-500/10 border border-brand-500/20">
                     {{ $game }}
                 </span>
                 <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold {{ $activeSeason->status === 'ONGOING' ? 'bg-red-500/10 text-red-600 dark:text-red-400 border border-red-500/20' : 'bg-brand-500/10 text-brand-600 dark:text-brand-400 border border-brand-500/20' }}">
@@ -144,7 +143,6 @@
                     x-on:click="isOpen = !isOpen"
                     class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-xs font-bold border border-neutral-200 dark:border-neutral-700 bg-neutral-100 hover:bg-neutral-200/80 dark:bg-neutral-800 dark:hover:bg-neutral-700 text-neutral-800 dark:text-neutral-200 transition-all cursor-pointer shadow-2xs hover:scale-[1.02] active:scale-[0.98]"
                 >
-                    <x-lucide-list-ordered class="h-3.5 w-3.5 text-brand-500" />
                     <span x-text="isOpen ? 'Sembunyikan Klasemen &amp; Bracket' : 'Lihat Klasemen &amp; Detail Match'"></span>
                     <x-lucide-chevron-up class="h-3.5 w-3.5" x-show="isOpen" />
                     <x-lucide-chevron-down class="h-3.5 w-3.5" x-show="!isOpen" />

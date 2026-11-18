@@ -6,19 +6,17 @@
                 <button
                     type="button"
                     x-on:click="playoffTab = 'details'"
-                    class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer"
+                    class="inline-flex items-center px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer"
                     :class="playoffTab === 'details' ? 'bg-white dark:bg-neutral-900 text-brand-600 dark:text-brand-400 shadow-xs ring-1 ring-neutral-200/80 dark:ring-neutral-700' : 'text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-white'"
                 >
-                    <x-lucide-list-ordered class="h-3.5 w-3.5" />
                     <span>Klasemen &amp; Match</span>
                 </button>
                 <button
                     type="button"
                     x-on:click="playoffTab = 'bracket'"
-                    class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer"
+                    class="inline-flex items-center px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer"
                     :class="playoffTab === 'bracket' ? 'bg-white dark:bg-neutral-900 text-brand-600 dark:text-brand-400 shadow-xs ring-1 ring-neutral-200/80 dark:ring-neutral-700' : 'text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-white'"
                 >
-                    <x-lucide-git-commit class="h-3.5 w-3.5" />
                     <span>Bagan Bracket</span>
                 </button>
             </div>
@@ -67,15 +65,9 @@
                                             @forelse ($groupLb as $idx => $t)
                                                 <tr class="hover:bg-neutral-50/60 dark:hover:bg-neutral-800/40 transition-colors">
                                                     <td class="px-3.5 py-2.5 text-center font-bold">
-                                                        @if ($idx === 0)
-                                                            <x-lucide-medal class="h-4 w-4 text-amber-500 mx-auto" />
-                                                        @elseif ($idx === 1)
-                                                            <x-lucide-medal class="h-4 w-4 text-slate-400 mx-auto" />
-                                                        @elseif ($idx === 2)
-                                                            <x-lucide-medal class="h-4 w-4 text-amber-700 mx-auto" />
-                                                        @else
-                                                            <span class="text-neutral-400 font-mono">{{ $idx + 1 }}</span>
-                                                        @endif
+                                                        <span class="font-mono text-xs {{ $idx === 0 ? 'text-amber-500 font-black' : ($idx === 1 ? 'text-slate-400 font-bold' : ($idx === 2 ? 'text-amber-700 font-bold' : 'text-neutral-400')) }}">
+                                                            {{ $idx + 1 }}
+                                                        </span>
                                                     </td>
                                                     <td class="px-3.5 py-2.5">
                                                         <div class="flex items-center gap-2 min-w-0">
@@ -122,12 +114,9 @@
                 @else
                     {{-- PLAYOFF Final Standings --}}
                     <div class="flex items-center justify-between">
-                        <div class="flex items-center gap-2">
-                            <x-lucide-medal class="h-4 w-4 text-amber-500" />
-                            <h3 class="text-xs font-black uppercase tracking-wider text-neutral-700 dark:text-neutral-300">
-                                Klasemen Akhir
-                            </h3>
-                        </div>
+                        <h3 class="text-xs font-black uppercase tracking-wider text-neutral-700 dark:text-neutral-300">
+                            Klasemen Akhir
+                        </h3>
                         <span class="text-xs text-neutral-400 font-medium">
                             {{ count($leaderboard) }} Tim
                         </span>
@@ -149,15 +138,9 @@
                                     @forelse ($leaderboard as $idx => $t)
                                         <tr class="hover:bg-neutral-50/60 dark:hover:bg-neutral-800/40 transition-colors">
                                             <td class="px-3.5 py-3 text-center font-bold">
-                                                @if ($idx === 0)
-                                                    <x-lucide-trophy class="h-4 w-4 text-amber-500 mx-auto" />
-                                                @elseif ($idx === 1)
-                                                    <x-lucide-medal class="h-4 w-4 text-slate-400 mx-auto" />
-                                                @elseif ($idx === 2)
-                                                    <x-lucide-medal class="h-4 w-4 text-amber-700 mx-auto" />
-                                                @else
-                                                    <span class="text-neutral-400 font-mono">{{ $idx + 1 }}</span>
-                                                @endif
+                                                <span class="font-mono text-xs {{ $idx === 0 ? 'text-amber-500 font-black' : ($idx === 1 ? 'text-slate-400 font-bold' : ($idx === 2 ? 'text-amber-700 font-bold' : 'text-neutral-400')) }}">
+                                                    {{ $idx + 1 }}
+                                                </span>
                                             </td>
                                             <td class="px-3.5 py-3">
                                                 <div class="flex items-center gap-2.5 min-w-0">
@@ -212,12 +195,9 @@
             <!-- MATCH HISTORY / HASIL PERTANDINGAN (Right) -->
             <div class="lg:col-span-5 flex flex-col gap-4">
                 <div class="flex items-center justify-between">
-                    <div class="flex items-center gap-2">
-                        <x-lucide-swords class="h-4 w-4 text-brand-500" />
-                        <h3 class="text-xs font-black uppercase tracking-wider text-neutral-700 dark:text-neutral-300">
-                            Riwayat Laga
-                        </h3>
-                    </div>
+                    <h3 class="text-xs font-black uppercase tracking-wider text-neutral-700 dark:text-neutral-300">
+                        Riwayat Laga
+                    </h3>
                     <span class="text-xs text-neutral-400 font-medium">
                         {{ $activeSeason->matches->count() }} Laga
                     </span>
@@ -239,9 +219,6 @@
                                 <!-- Team A -->
                                 <div class="flex items-center gap-1.5 w-5/12 min-w-0 {{ $match->winnerId === $match->teamAId ? 'font-bold text-neutral-900 dark:text-white' : 'text-neutral-500 dark:text-neutral-400 font-medium' }}">
                                     <span class="truncate text-xs" title="{{ $match->teamA?->name }}">{{ $match->teamA?->name ?? 'TBD' }}</span>
-                                    @if ($match->winnerId === $match->teamAId)
-                                        <x-lucide-trophy class="h-3 w-3 text-amber-500 shrink-0" />
-                                    @endif
                                 </div>
 
                                 <!-- Score Chip -->
@@ -257,9 +234,6 @@
 
                                 <!-- Team B -->
                                 <div class="flex items-center justify-end gap-1.5 w-5/12 min-w-0 text-right {{ $match->winnerId === $match->teamBId ? 'font-bold text-neutral-900 dark:text-white' : 'text-neutral-500 dark:text-neutral-400 font-medium' }}">
-                                    @if ($match->winnerId === $match->teamBId)
-                                        <x-lucide-trophy class="h-3 w-3 text-amber-500 shrink-0" />
-                                    @endif
                                     <span class="truncate text-xs" title="{{ $match->teamB?->name }}">{{ $match->teamB?->name ?? 'TBD' }}</span>
                                 </div>
                             </div>

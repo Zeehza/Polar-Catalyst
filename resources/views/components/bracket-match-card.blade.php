@@ -37,8 +37,7 @@
                     Live
                 </span>
             @else
-                <span class="text-[9px] md:text-[10px] text-neutral-400 flex items-center gap-1 font-medium">
-                    <x-lucide-clock class="h-2.5 w-2.5" />
+                <span class="text-[9px] md:text-[10px] text-neutral-400 font-medium">
                     Jadwal
                 </span>
             @endif
@@ -61,9 +60,6 @@
             >
                 {{ $series['teamA']['name'] ?? 'TBD' }}
             </span>
-            @if ($isWinnerA)
-                <x-lucide-trophy class="h-3 w-3 text-amber-500 shrink-0" />
-            @endif
         </div>
         <span class="font-mono text-[11px] md:text-xs px-1.5 py-0.5 rounded-md shrink-0 font-bold tabular-nums {{ $isWinnerA ? 'bg-brand-500 text-white' : 'bg-neutral-100 dark:bg-neutral-800 text-neutral-600 dark:text-neutral-400' }}">
             {{ $series['gamesWonA'] }}
@@ -86,9 +82,6 @@
             >
                 {{ $series['teamB']['name'] ?? 'TBD' }}
             </span>
-            @if ($isWinnerB)
-                <x-lucide-trophy class="h-3 w-3 text-amber-500 shrink-0" />
-            @endif
         </div>
         <span class="font-mono text-[11px] md:text-xs px-1.5 py-0.5 rounded-md shrink-0 font-bold tabular-nums {{ $isWinnerB ? 'bg-brand-500 text-white' : 'bg-neutral-100 dark:bg-neutral-800 text-neutral-600 dark:text-neutral-400' }}">
             {{ $series['gamesWonB'] }}

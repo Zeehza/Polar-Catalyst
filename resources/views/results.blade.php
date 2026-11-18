@@ -8,8 +8,7 @@
         <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-brand-500/15 rounded-full blur-[100px] pointer-events-none"></div>
 
         <div class="relative z-10 container mx-auto max-w-4xl flex flex-col items-center">
-            <div class="inline-flex items-center gap-2 px-3 py-1 mb-3.5 rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/20 text-xs font-bold uppercase tracking-widest">
-                <x-lucide-trophy class="h-3.5 w-3.5" />
+            <div class="inline-flex items-center px-3 py-1 mb-3.5 rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/20 text-xs font-bold uppercase tracking-widest">
                 <span>Hall of Fame &amp; Standings</span>
             </div>
             <h1 class="text-3xl md:text-5xl font-black tracking-tight text-white mb-3">

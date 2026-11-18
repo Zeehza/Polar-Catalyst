@@ -6,8 +6,7 @@
         <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
             <div class="flex flex-col gap-2">
                 <div class="flex items-center gap-2 flex-wrap">
-                    <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider text-brand-600 dark:text-brand-400 bg-brand-500/10 border border-brand-500/20">
-                        <x-lucide-gamepad-2 class="h-3.5 w-3.5" />
+                    <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider text-brand-600 dark:text-brand-400 bg-brand-500/10 border border-brand-500/20">
                         {{ $game }}
                     </span>
                     <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold {{ $activeSeason->status === 'ONGOING' ? 'bg-red-500/10 text-red-600 dark:text-red-400 border border-red-500/20' : ($activeSeason->status === 'UPCOMING' ? 'bg-brand-500/10 text-brand-600 dark:text-brand-400 border border-brand-500/20' : 'bg-neutral-200/60 text-neutral-600 dark:bg-neutral-800 dark:text-neutral-400') }}">
@@ -74,12 +73,9 @@
         @if (count($displayTeams) > 0)
             <div class="flex flex-col gap-4 pb-6 border-b border-neutral-200/80 dark:border-neutral-800">
                 <div class="flex items-center justify-between">
-                    <div class="flex items-center gap-2">
-                        <x-lucide-shield class="h-4 w-4 text-brand-500" />
-                        <h3 class="text-xs font-black uppercase tracking-wider text-neutral-500 dark:text-neutral-400">
-                            {{ $activeSeason->type === 'GROUP_STAGE' ? 'Top Qualified Teams' : 'Tim Peserta' }}
-                        </h3>
-                    </div>
+                    <h3 class="text-xs font-black uppercase tracking-wider text-neutral-500 dark:text-neutral-400">
+                        {{ $activeSeason->type === 'GROUP_STAGE' ? 'Top Qualified Teams' : 'Tim Peserta' }}
+                    </h3>
                     <span class="text-xs font-bold text-neutral-400">
                         {{ count($displayTeams) }} Tim
                     </span>
@@ -145,19 +141,17 @@
                     <button
                         type="button"
                         x-on:click="eventTab = 'schedule'"
-                        class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer"
+                        class="inline-flex items-center px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer"
                         :class="eventTab === 'schedule' ? 'bg-white dark:bg-neutral-900 text-brand-600 dark:text-brand-400 shadow-xs ring-1 ring-neutral-200/80 dark:ring-neutral-700' : 'text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-white'"
                     >
-                        <x-lucide-clock class="h-3.5 w-3.5" />
                         <span>Jadwal Match</span>
                     </button>
                     <button
                         type="button"
                         x-on:click="eventTab = 'bracket'"
-                        class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer"
+                        class="inline-flex items-center px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer"
                         :class="eventTab === 'bracket' ? 'bg-white dark:bg-neutral-900 text-brand-600 dark:text-brand-400 shadow-xs ring-1 ring-neutral-200/80 dark:ring-neutral-700' : 'text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-white'"
                     >
-                        <x-lucide-git-commit class="h-3.5 w-3.5" />
                         <span>Bagan Bracket</span>
                     </button>
                 </div>
@@ -213,9 +207,8 @@
             @else
                 <div class="flex flex-col gap-4">
                     <div class="flex items-center justify-between">
-                        <h4 class="text-xs font-black uppercase tracking-wider text-neutral-500 dark:text-neutral-400 flex items-center gap-2">
-                            <x-lucide-swords class="h-3.5 w-3.5 text-brand-500" />
-                            <span>Jadwal Pertandingan ({{ $activeSeason->season }})</span>
+                        <h4 class="text-xs font-black uppercase tracking-wider text-neutral-500 dark:text-neutral-400">
+                            Jadwal Pertandingan ({{ $activeSeason->season }})
                         </h4>
                         <span class="text-xs font-medium text-neutral-400">
                             {{ $upcomingMatches->count() }} Match
@@ -283,8 +276,7 @@
                                     </span>
 
                                     @if ($match->status === 'COMPLETED' && $match->winner)
-                                        <span class="text-neutral-500 flex items-center gap-1 font-medium">
-                                            <x-lucide-trophy class="h-3 w-3 text-amber-500" />
+                                        <span class="text-neutral-500 font-medium">
                                             <span>Pemenang:</span>
                                             <span class="font-bold text-neutral-900 dark:text-white">{{ $match->winner->name }}</span>
                                         </span>

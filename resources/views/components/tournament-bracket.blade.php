@@ -25,26 +25,20 @@
     <div x-data="{ hoveredTeamId: null }" class="flex flex-col gap-5 w-full">
         <!-- Header Info Ribbon -->
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3.5 bg-neutral-50/80 dark:bg-neutral-950/60 rounded-2xl border border-neutral-200/80 dark:border-neutral-800">
-            <div class="flex items-center gap-3">
-                <div class="p-2 bg-brand-500/10 text-brand-600 dark:text-brand-400 rounded-xl shrink-0">
-                    <x-lucide-git-commit class="h-4 w-4" />
-                </div>
-                <div class="flex items-center gap-2 flex-wrap">
-                    <h4 class="text-xs font-black uppercase tracking-wider text-neutral-900 dark:text-white">
-                        Bagan Playoff
-                    </h4>
-                    <span class="px-2 py-0.5 rounded-md text-[10px] font-bold bg-neutral-200/60 dark:bg-neutral-800 text-neutral-600 dark:text-neutral-400">
-                        {{ $isDoubleElimination ? 'Double Elimination' : 'Single Elimination' }}
-                    </span>
-                    <span class="text-[11px] text-neutral-400 font-medium hidden sm:inline">
-                        &bull; Sorot nama tim untuk highlight alur bagan
-                    </span>
-                </div>
+            <div class="flex items-center gap-2 flex-wrap">
+                <h4 class="text-xs font-black uppercase tracking-wider text-neutral-900 dark:text-white">
+                    Bagan Playoff
+                </h4>
+                <span class="px-2 py-0.5 rounded-md text-[10px] font-bold bg-neutral-200/60 dark:bg-neutral-800 text-neutral-600 dark:text-neutral-400">
+                    {{ $isDoubleElimination ? 'Double Elimination' : 'Single Elimination' }}
+                </span>
+                <span class="text-[11px] text-neutral-400 font-medium hidden sm:inline">
+                    &bull; Sorot nama tim untuk highlight alur bagan
+                </span>
             </div>
 
             @if ($championName)
                 <div class="flex items-center gap-2 px-3 py-1 bg-amber-500/10 border border-amber-500/30 rounded-xl text-amber-800 dark:text-amber-300 text-xs font-black self-start sm:self-auto shrink-0 shadow-2xs">
-                    <x-lucide-trophy class="h-3.5 w-3.5 text-amber-500 shrink-0" />
                     <span>Juara: {{ $championName }}</span>
                 </div>
             @endif
@@ -80,8 +74,7 @@
 
                             @if ($grandFinal)
                                 <div class="flex-1 min-w-0 flex flex-col gap-2.5 pl-2.5 sm:pl-3.5 md:pl-4 border-l border-dashed border-neutral-300 dark:border-neutral-700">
-                                    <div class="text-[10px] font-black text-amber-600 dark:text-amber-400 uppercase tracking-wider text-center pb-1 border-b border-amber-400/40 flex items-center justify-center gap-1 truncate">
-                                        <x-lucide-trophy class="h-3 w-3 text-amber-500 shrink-0" />
+                                    <div class="text-[10px] font-black text-amber-600 dark:text-amber-400 uppercase tracking-wider text-center pb-1 border-b border-amber-400/40 truncate">
                                         <span>Grand Final</span>
                                     </div>
                                     <div class="flex flex-col justify-center gap-3 h-full py-1">
