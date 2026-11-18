@@ -85,10 +85,10 @@
                     </span>
                 </div>
 
-                <div class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-3">
+                <div class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-3 sm:gap-4">
                     @foreach ($displayTeams as $team)
-                        <div class="group flex flex-col items-center p-3 rounded-2xl bg-neutral-50/60 dark:bg-neutral-950/40 border border-neutral-200/60 dark:border-neutral-800/80 hover:border-brand-500/40 hover:bg-white dark:hover:bg-neutral-900 hover:shadow-xs transition-all hover:-translate-y-0.5">
-                            <div class="w-12 h-12 rounded-xl flex items-center justify-center p-1.5 relative overflow-hidden bg-white dark:bg-neutral-900 border border-neutral-200/60 dark:border-neutral-800 shadow-2xs group-hover:scale-105 transition-transform">
+                        <div class="group flex flex-col items-center p-3 sm:p-3.5 rounded-2xl bg-neutral-50/60 dark:bg-neutral-950/40 border border-neutral-200/60 dark:border-neutral-800/80 hover:border-brand-500/40 hover:bg-white dark:hover:bg-neutral-900 hover:shadow-xs transition-all hover:-translate-y-0.5">
+                            <div class="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl flex items-center justify-center p-1.5 relative overflow-hidden bg-white dark:bg-neutral-900 border border-neutral-200/60 dark:border-neutral-800 shadow-2xs group-hover:scale-105 transition-transform">
                                 @if ($team->logoUrl)
                                     <img
                                         src="{{ $team->logoUrl }}"
@@ -98,12 +98,12 @@
                                         decoding="async"
                                     />
                                 @else
-                                    <span class="font-black text-xs text-brand-600 dark:text-brand-400 tracking-wider">
+                                    <span class="font-black text-sm text-brand-600 dark:text-brand-400 tracking-wider">
                                         {{ strtoupper(substr($team->name, 0, 2)) }}
                                     </span>
                                 @endif
                             </div>
-                            <span class="mt-2 text-xs font-bold text-neutral-800 dark:text-neutral-200 text-center truncate w-full px-1" title="{{ $team->name }}">
+                            <span class="mt-2.5 text-xs font-bold text-neutral-800 dark:text-neutral-200 text-center truncate w-full px-1" title="{{ $team->name }}">
                                 {{ $team->name }}
                             </span>
                             @if ($team->group)

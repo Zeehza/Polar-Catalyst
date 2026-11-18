@@ -218,9 +218,9 @@
                                     title="Klik untuk upload/ubah logo tim"
                                 >
                                     @if ($team->logoUrl)
-                                        <img src="{{ $team->logoUrl }}" alt="{{ $team->name }}" loading="lazy" decoding="async" class="w-6 h-6 object-contain rounded bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 shrink-0" />
+                                        <img src="{{ $team->logoUrl }}" alt="{{ $team->name }}" loading="lazy" decoding="async" class="w-8 h-8 object-contain rounded-lg bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 shrink-0 p-0.5" />
                                     @else
-                                        <div class="w-6 h-6 bg-neutral-200 dark:bg-neutral-800 rounded flex items-center justify-center text-[10px] font-black text-neutral-500 shrink-0">
+                                        <div class="w-8 h-8 bg-neutral-200 dark:bg-neutral-800 rounded-lg flex items-center justify-center text-xs font-black text-neutral-500 shrink-0">
                                             {{ strtoupper(substr($team->name, 0, 2)) }}
                                         </div>
                                     @endif
