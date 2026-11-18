@@ -15,7 +15,7 @@
                 Results &amp; Leaderboard
             </h1>
             <p class="text-sm md:text-base text-brand-200/90 max-w-xl text-pretty">
-                Rekap podium juara, persentase kemenangan, dan riwayat hasil laga per season.
+                Lihat rekam jejak kemenangan, podium juara, dan posisi klasemen tim di turnamen komunitas Polar Catalyst per season.
             </p>
         </div>
     </section>
