@@ -1,7 +1,7 @@
 @extends('layouts.admin', ['title' => 'Buat Turnamen / Season Baru'])
 
 @section('content')
-<div class="flex flex-col gap-6 max-w-3xl mx-auto">
+<div class="flex flex-col gap-6 w-full">
     <!-- Header with Breadcrumbs & Back Button -->
     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div class="flex items-center gap-3.5">
