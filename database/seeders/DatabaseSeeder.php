@@ -16,9 +16,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        $username = env('ADMIN_USERNAME', 'admin');
+        $password = env('ADMIN_PASSWORD', 'changeme');
+
         Admin::firstOrCreate(
-            ['username' => 'admin'],
-            ['passwordHash' => Hash::make('admin123')]
+            ['username' => $username],
+            ['passwordHash' => Hash::make($password)]
         );
 
         $this->call(TournamentDataSeeder::class);
