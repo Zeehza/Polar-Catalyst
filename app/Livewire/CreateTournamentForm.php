@@ -112,6 +112,18 @@ class CreateTournamentForm extends Component
         $this->season = $suggested;
     }
 
+    public function setGame(string $gameName): void
+    {
+        $this->game = $gameName;
+    }
+
+    public function setType(string $typeName): void
+    {
+        if (in_array($typeName, ['PLAYOFF', 'GROUP_STAGE'], true)) {
+            $this->type = $typeName;
+        }
+    }
+
     protected function getNextSeasonSuggestion(array $seasons): string
     {
         $maxNum = 0;
