@@ -29,6 +29,11 @@
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @livewireStyles
+    <noscript>
+        <style>
+            .reveal-on-scroll { opacity: 1 !important; transform: none !important; }
+        </style>
+    </noscript>
 </head>
 <body class="min-h-screen antialiased bg-white text-neutral-900 dark:bg-neutral-950 dark:text-neutral-50 flex flex-col font-sans">
     @include('partials.navbar')
