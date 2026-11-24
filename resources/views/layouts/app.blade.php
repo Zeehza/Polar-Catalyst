@@ -5,7 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="darkreader-lock">
-    <link rel="icon" href="/favicon.ico">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="alternate icon" href="/favicon.ico">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 
     <title>{{ isset($title) ? $title . ' | Polar Catalyst' : 'Polar Catalyst' }}</title>
     <meta name="description" content="{{ $description ?? 'Official online presence of Polar Catalyst' }}">
