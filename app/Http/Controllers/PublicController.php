@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Tournament;
+use App\Services\TournamentService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 
 class PublicController extends Controller
 {
@@ -15,49 +17,59 @@ class PublicController extends Controller
 
     public function events()
     {
-        $tournaments = Tournament::whereIn('status', ['ONGOING', 'UPCOMING', 'COMPLETED'])
-            ->orderByDesc('startDate')
-            ->get();
+        $v = TournamentService::getCacheVersion();
+        $tournamentGroups = Cache::remember("public_events_groups_v{$v}", 3600, function () {
+            $tournaments = Tournament::whereIn('status', ['ONGOING', 'UPCOMING', 'COMPLETED'])
+                ->orderByDesc('startDate')
+                ->get();
 
-        $groupedMap = [];
-        foreach ($tournaments as $t) {
-            if (!isset($groupedMap[$t->name])) {
-                $groupedMap[$t->name] = [
-                    'tournamentName' => $t->name,
-                    'game' => $t->game,
-                    'seasonIds' => [$t->id],
-                ];
-            } else {
-                $groupedMap[$t->name]['seasonIds'][] = $t->id;
+            $groupedMap = [];
+            foreach ($tournaments as $t) {
+                if (!isset($groupedMap[$t->name])) {
+                    $groupedMap[$t->name] = [
+                        'tournamentName' => $t->name,
+                        'game' => $t->game,
+                        'seasonIds' => [$t->id],
+                    ];
+                } else {
+                    $groupedMap[$t->name]['seasonIds'][] = $t->id;
+                }
             }
-        }
+
+            return array_values($groupedMap);
+        });
 
         return view('events', [
-            'tournamentGroups' => array_values($groupedMap),
+            'tournamentGroups' => $tournamentGroups,
         ]);
     }
 
     public function results()
     {
-        $tournaments = Tournament::whereIn('status', ['ONGOING', 'COMPLETED'])
-            ->orderByDesc('startDate')
-            ->get();
+        $v = TournamentService::getCacheVersion();
+        $tournamentGroups = Cache::remember("public_results_groups_v{$v}", 3600, function () {
+            $tournaments = Tournament::whereIn('status', ['ONGOING', 'COMPLETED'])
+                ->orderByDesc('startDate')
+                ->get();
 
-        $groupedMap = [];
-        foreach ($tournaments as $t) {
-            if (!isset($groupedMap[$t->name])) {
-                $groupedMap[$t->name] = [
-                    'tournamentName' => $t->name,
-                    'game' => $t->game,
-                    'seasonIds' => [$t->id],
-                ];
-            } else {
-                $groupedMap[$t->name]['seasonIds'][] = $t->id;
+            $groupedMap = [];
+            foreach ($tournaments as $t) {
+                if (!isset($groupedMap[$t->name])) {
+                    $groupedMap[$t->name] = [
+                        'tournamentName' => $t->name,
+                        'game' => $t->game,
+                        'seasonIds' => [$t->id],
+                    ];
+                } else {
+                    $groupedMap[$t->name]['seasonIds'][] = $t->id;
+                }
             }
-        }
+
+            return array_values($groupedMap);
+        });
 
         return view('results', [
-            'tournamentGroups' => array_values($groupedMap),
+            'tournamentGroups' => $tournamentGroups,
         ]);
     }
 

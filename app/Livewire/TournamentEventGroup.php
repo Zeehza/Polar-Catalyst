@@ -42,7 +42,8 @@ class TournamentEventGroup extends Component
                 $diff = ($weights[$b->status] ?? 0) - ($weights[$a->status] ?? 0);
                 if ($diff !== 0) return $diff;
                 return $b->startDate <=> $a->startDate;
-            });
+            })
+            ->values();
 
         $activeSeason = $seasons->firstWhere('id', $this->activeSeasonId) ?? $seasons->first();
         if ($activeSeason && $this->activeSeasonId !== $activeSeason->id) {

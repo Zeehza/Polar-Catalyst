@@ -4,6 +4,17 @@ namespace App\Services;
 
 class TournamentService
 {
+    public static function getCacheVersion(): int
+    {
+        return (int) \Illuminate\Support\Facades\Cache::get('public_tournaments_cache_version', 1);
+    }
+
+    public static function clearPublicCache(): void
+    {
+        $v = (int) \Illuminate\Support\Facades\Cache::get('public_tournaments_cache_version', 1);
+        \Illuminate\Support\Facades\Cache::forever('public_tournaments_cache_version', $v + 1);
+    }
+
     /**
      * Menghitung leaderboard turnamen (Playoff / Group Stage).
      */

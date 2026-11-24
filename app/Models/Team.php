@@ -50,6 +50,17 @@ class Team extends Model
         'createdAt' => 'datetime',
     ];
 
+    protected static function booted(): void
+    {
+        static::saved(function () {
+            \App\Services\TournamentService::clearPublicCache();
+        });
+
+        static::deleted(function () {
+            \App\Services\TournamentService::clearPublicCache();
+        });
+    }
+
     public function tournament(): BelongsTo
     {
         return $this->belongsTo(Tournament::class, 'tournamentId');

@@ -37,7 +37,8 @@ class TournamentResultGroup extends Component
         $seasons = Tournament::with(['teams', 'matches.teamA', 'matches.teamB', 'matches.winner'])
             ->whereIn('id', $this->seasonIds)
             ->get()
-            ->sortByDesc('startDate');
+            ->sortByDesc('startDate')
+            ->values();
 
         $activeSeason = $seasons->firstWhere('id', $this->activeSeasonId) ?? $seasons->first();
         if ($activeSeason && $this->activeSeasonId !== $activeSeason->id) {
